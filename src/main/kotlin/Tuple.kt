@@ -12,7 +12,7 @@ open class Tuple(val x: Double, val y: Double, val z: Double, val w: Double) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         other as Tuple
-        return feq(this.x, other.x) && feq(this.y, other.y) && feq(this.z, other.z) && feq(this.w, other.w)
+        return feq(x, other.x) && feq(y, other.y) && feq(z, other.z) && feq(w, other.w)
     }
 
     override fun hashCode(): Int {
@@ -23,9 +23,7 @@ open class Tuple(val x: Double, val y: Double, val z: Double, val w: Double) {
         return result
     }
 
-    override fun toString(): String {
-        return "Tuple(x=$x, y=$y, z=$z, w=$w)"
-    }
+    override fun toString(): String = "Tuple(x=$x, y=$y, z=$z, w=$w)"
 }
 
 class Point(x: Double, y: Double, z: Double, w: Double = 1.0) : Tuple(x, y, z, w)
