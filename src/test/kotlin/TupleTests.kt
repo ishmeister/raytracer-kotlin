@@ -2,6 +2,7 @@ package com.bhana
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.math.sqrt
 
 class TupleTests {
 
@@ -87,62 +88,79 @@ class TupleTests {
 
     @Test
     fun `Multiplying a tuple by a fraction`() {
-
+        val t = Tuple(1.0, -2.0, 3.0, -4.0)
+        val t2 = t * 0.5
+        assertEquals(Tuple(0.5, -1.0, 1.5, -2.0), t2)
     }
 
     @Test
     fun `Dividing a tuple by a scalar`() {
-
+        val t = Tuple(1.0, -2.0, 3.0, -4.0)
+        val t2 = t / 2.0
+        assertEquals(Tuple(0.5, -1.0, 1.5, -2.0), t2)
     }
 
     @Test
     fun `Magnitude of Vector(1, 0, 0)`() {
-
+        val v = Vector(1.0, 0.0, 0.0)
+        assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(0, 1, 0)`() {
-
+        val v = Vector(0.0, 1.0, 0.0)
+        assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(0, 0, 1)`() {
-
+        val v = Vector(0.0, 0.0, 1.0)
+        assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(1, 2, 3)`() {
-
+        val v = Vector(1.0, 2.0, 3.0)
+        assertEquals(sqrt(14.0), v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(-1, -2, -3)`() {
-
+        val v = Vector(-1.0, -2.0, -3.0)
+        assertEquals(sqrt(14.0), v.magnitude())
     }
 
     @Test
     fun `Normalising Vector(4, 0, 0) gives Vector(1, 0, 0)`() {
-
+        val v = Vector(4.0, 0.0, 0.0)
+        assertEquals(Vector(1.0, 0.0, 0.0), v.normalise())
     }
 
     @Test
     fun `Normalising Vector(1, 2, 3)`() {
-
+        val v = Vector(1.0, 2.0, 3.0)
+        assertEquals(Vector(0.26726, 0.53452, 0.80178), v.normalise())
     }
 
     @Test
     fun `Magnitude of a normalised vector is 1`() {
-
+        val v = Vector(1.0, 2.0, 3.0)
+        assertEquals(1.0, v.normalise().magnitude())
     }
 
     @Test
     fun `Dot product of two vectors`() {
-
+        val v1 = Vector(1.0, 2.0, 3.0)
+        val v2 = Vector(2.0, 3.0, 4.0)
+        assertEquals(20.0, v1.dot(v2))
     }
 
     @Test
     fun `Cross product of two vectors`() {
-
+        val v1 = Vector(1.0, 2.0, 3.0)
+        val v2 = Vector(2.0, 3.0, 4.0)
+        assertEquals(Vector(-1.0, 2.0, -1.0), v1.cross(v2))
+        assertEquals(Vector(1.0, -2.0, 1.0), v2.cross(v1))
     }
 
 }
