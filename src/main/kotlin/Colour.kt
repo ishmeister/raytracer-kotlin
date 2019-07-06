@@ -1,6 +1,6 @@
 package com.bhana
 
-class Colour(val r: Double, val g: Double, val b: Double) {
+class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

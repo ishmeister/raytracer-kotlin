@@ -7,7 +7,7 @@ const val EPSILON: Double = 0.00001
 
 fun feq(f1: Double, f2: Double): Boolean = abs(f1 - f2) < EPSILON
 
-open class Tuple(val x: Double, val y: Double, val z: Double, val w: Double) {
+open class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
