@@ -8,7 +8,7 @@ class TupleTests {
 
     @Test
     fun `Point() creates a tuple with w=1`() {
-        val p = Point(4.0, -4.0, 3.0)
+        val p = point(4.0, -4.0, 3.0)
         assertEquals(4.0, p.x)
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
@@ -17,7 +17,7 @@ class TupleTests {
 
     @Test
     fun `Vector() creates a tuple with w=0`() {
-        val p = Vector(4.0, -4.0, 3.0)
+        val p = vector(4.0, -4.0, 3.0)
         assertEquals(4.0, p.x)
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
@@ -26,50 +26,50 @@ class TupleTests {
 
     @Test
     fun `Adding a point to a vector makes a point`() {
-        val t1 = Point(3.0, -2.0, 5.0)
-        val t2 = Vector(-2.0, 3.0, 1.0)
+        val t1 = point(3.0, -2.0, 5.0)
+        val t2 = vector(-2.0, 3.0, 1.0)
         val t3 = t1 + t2
-        assertEquals(Point(1.0, 1.0, 6.0), t3)
+        assertEquals(point(1.0, 1.0, 6.0), t3)
     }
 
     @Test
     fun `Adding a vector to a vector makes a vector`() {
-        val t1 = Vector(3.0, -2.0, 5.0)
-        val t2 = Vector(-2.0, 3.0, 1.0)
+        val t1 = vector(3.0, -2.0, 5.0)
+        val t2 = vector(-2.0, 3.0, 1.0)
         val t3 = t1 + t2
-        assertEquals(Vector(1.0, 1.0, 6.0), t3)
+        assertEquals(vector(1.0, 1.0, 6.0), t3)
     }
 
     @Test
     fun `Subtracting two points make a vector`() {
-        val p1 = Point(3.0, 2.0, 1.0)
-        val p2 = Point(5.0, 6.0, 7.0)
+        val p1 = point(3.0, 2.0, 1.0)
+        val p2 = point(5.0, 6.0, 7.0)
         val v = p1 - p2
-        assertEquals(Vector(-2.0, -4.0, -6.0), v)
+        assertEquals(vector(-2.0, -4.0, -6.0), v)
     }
 
     @Test
     fun `Subtracting a vector from a point makes a point`() {
-        val p = Point(3.0, 2.0, 1.0)
-        val v = Vector(5.0, 6.0, 7.0)
+        val p = point(3.0, 2.0, 1.0)
+        val v = vector(5.0, 6.0, 7.0)
         val p3 = p - v
-        assertEquals(Point(-2.0, -4.0, -6.0), p3)
+        assertEquals(point(-2.0, -4.0, -6.0), p3)
     }
 
     @Test
     fun `Subtracting two vectors makes a vector`() {
-        val v1 = Vector(3.0, 2.0, 1.0)
-        val v2 = Vector(5.0, 6.0, 7.0)
+        val v1 = vector(3.0, 2.0, 1.0)
+        val v2 = vector(5.0, 6.0, 7.0)
         val v3 = v1 - v2
-        assertEquals(Vector(-2.0, -4.0, -6.0), v3)
+        assertEquals(vector(-2.0, -4.0, -6.0), v3)
     }
 
     @Test
     fun `Subtracting a vector from the zero vector`() {
-        val v1 = Vector(0.0, 0.0, 0.0)
-        val v2 = Vector(1.0, -2.0, 3.0)
+        val v1 = vector(0.0, 0.0, 0.0)
+        val v2 = vector(1.0, -2.0, 3.0)
         val v3 = v1 - v2
-        assertEquals(Vector(-1.0, 2.0, -3.0), v3)
+        assertEquals(vector(-1.0, 2.0, -3.0), v3)
     }
 
     @Test
@@ -102,65 +102,65 @@ class TupleTests {
 
     @Test
     fun `Magnitude of Vector(1, 0, 0)`() {
-        val v = Vector(1.0, 0.0, 0.0)
+        val v = vector(1.0, 0.0, 0.0)
         assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(0, 1, 0)`() {
-        val v = Vector(0.0, 1.0, 0.0)
+        val v = vector(0.0, 1.0, 0.0)
         assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(0, 0, 1)`() {
-        val v = Vector(0.0, 0.0, 1.0)
+        val v = vector(0.0, 0.0, 1.0)
         assertEquals(1.0, v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(1, 2, 3)`() {
-        val v = Vector(1.0, 2.0, 3.0)
+        val v = vector(1.0, 2.0, 3.0)
         assertEquals(sqrt(14.0), v.magnitude())
     }
 
     @Test
     fun `Magnitude of Vector(-1, -2, -3)`() {
-        val v = Vector(-1.0, -2.0, -3.0)
+        val v = vector(-1.0, -2.0, -3.0)
         assertEquals(sqrt(14.0), v.magnitude())
     }
 
     @Test
     fun `Normalising Vector(4, 0, 0) gives Vector(1, 0, 0)`() {
-        val v = Vector(4.0, 0.0, 0.0)
-        assertEquals(Vector(1.0, 0.0, 0.0), v.normalise())
+        val v = vector(4.0, 0.0, 0.0)
+        assertEquals(vector(1.0, 0.0, 0.0), v.normalise())
     }
 
     @Test
     fun `Normalising Vector(1, 2, 3)`() {
-        val v = Vector(1.0, 2.0, 3.0)
-        assertEquals(Vector(0.26726, 0.53452, 0.80178), v.normalise())
+        val v = vector(1.0, 2.0, 3.0)
+        assertEquals(vector(0.26726, 0.53452, 0.80178), v.normalise())
     }
 
     @Test
     fun `Magnitude of a normalised vector is 1`() {
-        val v = Vector(1.0, 2.0, 3.0)
+        val v = vector(1.0, 2.0, 3.0)
         assertEquals(1.0, v.normalise().magnitude())
     }
 
     @Test
     fun `Dot product of two vectors`() {
-        val v1 = Vector(1.0, 2.0, 3.0)
-        val v2 = Vector(2.0, 3.0, 4.0)
+        val v1 = vector(1.0, 2.0, 3.0)
+        val v2 = vector(2.0, 3.0, 4.0)
         assertEquals(20.0, v1.dot(v2))
     }
 
     @Test
     fun `Cross product of two vectors`() {
-        val v1 = Vector(1.0, 2.0, 3.0)
-        val v2 = Vector(2.0, 3.0, 4.0)
-        assertEquals(Vector(-1.0, 2.0, -1.0), v1.cross(v2))
-        assertEquals(Vector(1.0, -2.0, 1.0), v2.cross(v1))
+        val v1 = vector(1.0, 2.0, 3.0)
+        val v2 = vector(2.0, 3.0, 4.0)
+        assertEquals(vector(-1.0, 2.0, -1.0), v1.cross(v2))
+        assertEquals(vector(1.0, -2.0, 1.0), v2.cross(v1))
     }
 
 }
