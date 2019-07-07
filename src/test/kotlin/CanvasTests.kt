@@ -1,6 +1,6 @@
 package com.bhana
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class CanvasTests {
@@ -24,5 +24,35 @@ class CanvasTests {
         val c = Canvas(10, 20)
         c.writePixel(2, 3, Colour(1.0, 0.0, 0.0))
         assertEquals(Colour(1.0, 0.0, 0.0), c.getPixel(2, 3))
+    }
+
+    @Test
+    fun `Writing positive off canvas pixel throws exception`() {
+        val c = Canvas(10, 20)
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
+        }
+        assertNotNull(exception)
+    }
+
+    @Test
+    fun `Writing negative off canvas pixel throws exception`() {
+        val c = Canvas(10, 20)
+        assertFalse(c.isOnCanvas(10, 20))
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
+        }
+        assertNotNull(exception)
+    }
+
+    @Test
+    fun `Getting off canvas pixel throws exception`() {
+        val c = Canvas(10, 20)
+        assertFalse(c.isOnCanvas(10, 20))
+
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            c.getPixel(10, 20)
+        }
+        assertNotNull(exception)
     }
 }
