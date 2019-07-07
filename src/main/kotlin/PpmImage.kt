@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 const val MAX_COLOUR: Int = 255
 const val MAX_LINE_LENGTH: Int = 70
 
-class PpmImage(val canvas: Canvas) {
+class PpmImage(private val canvas: Canvas) {
 
     private fun toScaledInt(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
@@ -16,8 +16,6 @@ class PpmImage(val canvas: Canvas) {
         writer.write("$MAX_COLOUR\n")
 
         for (y in 0 until canvas.height) {
-
-            var builder = StringBuilder()
             var lineLength = 0
 
             for (x in 0 until canvas.width) {
@@ -31,22 +29,20 @@ class PpmImage(val canvas: Canvas) {
                 for (i in 0 until components.size) {
                     val c = components[i]
 
-                    builder.append(c)
+                    writer.write(c)
                     lineLength += c.length
 
-                    // 3rd pixel component of last pixel in the row or max line length reached
+                    // Add a new line when c = 3rd pixel component of last row pixel OR when max line length reached
                     val eol = (i == 2 && x == canvas.width - 1) || lineLength + c.length >= MAX_LINE_LENGTH
                     if (eol) {
-                        builder.append("\n")
+                        writer.write("\n")
                         lineLength = 0
                     } else {
-                        builder.append(" ")
+                        writer.write(" ")
                         lineLength += 1
                     }
                 }
             }
-
-            writer.write(builder.toString())
         }
     }
 }
