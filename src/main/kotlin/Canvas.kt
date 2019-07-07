@@ -1,7 +1,7 @@
 package com.bhana
 
 class Canvas(val width: Int, val height: Int) {
-    internal var pixels = Array(width) { Array(height) { Colour() } }
+    internal val pixels = Array(width) { Array(height) { Colour() } }
 
     fun writePixel(x: Int, y: Int, pixel: Colour) {
         if (!isOnCanvas(x, y)) return
