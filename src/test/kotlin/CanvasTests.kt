@@ -27,22 +27,16 @@ class CanvasTests {
     }
 
     @Test
-    fun `Writing positive off canvas pixel throws exception`() {
+    fun `Writing positive off Canvas pixels does not throw exception`() {
         val c = Canvas(10, 20)
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
-        }
-        assertNotNull(exception)
+        c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
     }
 
     @Test
-    fun `Writing negative off canvas pixel throws exception`() {
+    fun `Writing negative off Canvas pixels does not throw exception`() {
         val c = Canvas(10, 20)
         assertFalse(c.isOnCanvas(10, 20))
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
-        }
-        assertNotNull(exception)
+        c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
     }
 
     @Test

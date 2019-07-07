@@ -4,14 +4,12 @@ class Canvas(val width: Int, val height: Int) {
     internal var pixels = Array(width) { Array(height) { Colour() } }
 
     fun writePixel(x: Int, y: Int, pixel: Colour) {
-        if (!isOnCanvas(x, y))
-            throw IllegalArgumentException("invalid canvas coordinates ($x,$y)")
+        if (!isOnCanvas(x, y)) return
         pixels[x][y] = pixel
     }
 
     fun getPixel(x: Int, y: Int): Colour {
-        if (!isOnCanvas(x, y))
-            throw IllegalArgumentException("invalid canvas coordinates ($x,$y)")
+        if (!isOnCanvas(x, y)) throw IllegalArgumentException("invalid canvas coordinates ($x,$y)")
         return pixels[x][y]
     }
 
