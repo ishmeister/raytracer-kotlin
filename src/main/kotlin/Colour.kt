@@ -1,6 +1,19 @@
 package com.bhana
 
+import kotlin.math.max
+import kotlin.math.min
+
+fun clamp(value: Double, min: Double, max: Double): Double = max(min, min(value, max))
+
 class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
+
+    fun clip(): Colour {
+        return if (r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0) this
+        else {
+            Colour(clamp(r, 0.0, 1.0), clamp(g, 0.0, 1.0), clamp(b, 0.0, 1.0))
+        }
+
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

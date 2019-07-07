@@ -1,6 +1,7 @@
 package com.bhana
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.StringWriter
 
@@ -47,8 +48,8 @@ class PpmImageTests {
     @Test
     fun `Splitting long lines in PPM files`() {
         val canvas = Canvas(10, 2)
-        for (x in 0 until 9) {
-            for (y in 0 until 1) {
+        for (x in 0 until canvas.width) {
+            for (y in 0 until canvas.height) {
                 canvas.writePixel(x, y, Colour(1.0, 0.8, 0.6))
             }
         }
@@ -60,9 +61,25 @@ class PpmImageTests {
 
         val lines = writer.toString().lines()
 
+        for (line in lines) {
+            assertTrue(line.length <= 70, "line length must be <= 70: size=${line.length}, line=$line")
+        }
+
         assertEquals("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", lines[3])
         assertEquals("153 255 204 153 255 204 153 255 204 153 255 204 153", lines[4])
         assertEquals("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204", lines[5])
         assertEquals("153 255 204 153 255 204 153 255 204 153 255 204 153", lines[6])
+    }
+
+    @Test
+    fun `PPM file is terminated by newline character`() {
+        val canvas = Canvas(5, 3)
+        val ppm = PpmImage(canvas)
+        var writer = StringWriter()
+
+        ppm.writeCanvasToPpm(writer)
+
+        val file = writer.toString()
+        assertEquals('\n', file.last())
     }
 }

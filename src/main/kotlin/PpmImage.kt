@@ -8,38 +8,45 @@ const val MAX_LINE_LENGTH: Int = 70
 
 class PpmImage(val canvas: Canvas) {
 
-    private fun toScaledInt(value: Double): Int = clip((value * MAX_COLOUR).roundToInt())
-
-    private fun clip(value: Int): Int {
-        return when {
-            value > MAX_COLOUR -> MAX_COLOUR
-            value < 0 -> 0
-            else -> value
-        }
-    }
+    private fun toScaledInt(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
     fun writeCanvasToPpm(writer: Writer) {
         writer.write("P3\n")
         writer.write("${canvas.width} ${canvas.height}\n")
         writer.write("$MAX_COLOUR\n")
 
-        for (y in 0 until canvas.pixels.size) {
-            for (x in 0 until canvas.pixels[y].size) {
-                val pixel = canvas.getPixel(x, y)
+        for (y in 0 until canvas.height) {
 
-                writer.write("${toScaledInt(pixel.r)} ")
-                writer.write("${toScaledInt(pixel.g)} ")
-                writer.write("${toScaledInt(pixel.b)}")
+            var builder = StringBuilder()
+            var lineLength = 0
 
-                if (x > 0 && x % MAX_LINE_LENGTH == 0) {
-                    writer.write("\n")
-                }
+            for (x in 0 until canvas.width) {
+                val pixel = canvas.getPixel(x, y).clip()
 
-                if (x < canvas.pixels[y].size - 1) {
-                    writer.write(" ")
+                val rStr = toScaledInt(pixel.r).toString()
+                val gStr = toScaledInt(pixel.g).toString()
+                val bStr = toScaledInt(pixel.b).toString()
+
+                val components = arrayOf(rStr, gStr, bStr)
+                for (i in 0 until components.size) {
+                    val c = components[i]
+
+                    builder.append(c)
+                    lineLength += c.length
+
+                    // 3rd pixel component of last pixel in the row or max line length reached
+                    val eol = (i == 2 && x == canvas.width - 1) || lineLength + c.length >= MAX_LINE_LENGTH
+                    if (eol) {
+                        builder.append("\n")
+                        lineLength = 0
+                    } else {
+                        builder.append(" ")
+                        lineLength += 1
+                    }
                 }
             }
-            writer.write("\n")
+
+            writer.write(builder.toString())
         }
     }
 }

@@ -43,4 +43,11 @@ class ColourTests {
         val c3 = c1 * c2
         assertEquals(Colour(0.9, 0.2, 0.04), c3)
     }
+
+    @Test
+    fun `Clipping a colour`() {
+        val c1 = Colour(1.5, -0.2, 0.4)
+        val c2 = c1.clip()
+        assertEquals(Colour(1.0, 0.0, 0.4), c2)
+    }
 }
