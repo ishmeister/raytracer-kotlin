@@ -1,16 +1,8 @@
 package com.bhana
 
-import kotlin.math.abs
 import kotlin.math.sqrt
 
-const val EPSILON: Double = 0.00001
-
-fun feq(f1: Double, f2: Double): Boolean = abs(f1 - f2) < EPSILON
-
-fun vector(x: Double, y: Double, z: Double): Tuple = Tuple(x, y, z, 0.0)
-fun point(x: Double, y: Double, z: Double): Tuple = Tuple(x, y, z, 1.0)
-
-open class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
+class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
 
     fun magnitude(): Double = sqrt(x * x + y * y + z * z)
 
@@ -28,7 +20,7 @@ open class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
         other as Tuple
-        return feq(x, other.x) && feq(y, other.y) && feq(z, other.z) && feq(w, other.w)
+        return x.eq(other.x) && y.eq(other.y) && z.eq(other.z) && w.eq(other.w)
     }
 
     override fun hashCode(): Int {

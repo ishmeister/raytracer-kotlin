@@ -9,7 +9,7 @@ class Canvas(val width: Int, val height: Int) {
     }
 
     fun getPixel(x: Int, y: Int): Colour {
-        if (!isOnCanvas(x, y)) throw IllegalArgumentException("invalid canvas coordinates ($x,$y)")
+        check(isOnCanvas(x, y)) { "invalid canvas coordinates ($x,$y)" }
         return pixels[x][y]
     }
 

@@ -16,7 +16,7 @@ class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
         other as Colour
-        return feq(r, other.r) && feq(g, other.g) && feq(b, other.b)
+        return r.eq(other.r) && g.eq(other.g) && b.eq(other.b)
     }
 
     override fun hashCode(): Int {

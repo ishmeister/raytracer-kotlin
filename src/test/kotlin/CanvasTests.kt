@@ -44,7 +44,7 @@ class CanvasTests {
         val c = Canvas(10, 20)
         assertFalse(c.isOnCanvas(10, 20))
 
-        val exception = assertThrows(IllegalArgumentException::class.java) {
+        val exception = assertThrows(IllegalStateException::class.java) {
             c.getPixel(10, 20)
         }
         assertNotNull(exception)

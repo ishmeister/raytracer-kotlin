@@ -11,7 +11,7 @@ class Matrix(val elems: Array<Array<Double>>) {
 
         for (row in 0 until elems.size) {
             for (col in 0 until elems[row].size) {
-                if (!feq(elems[row][col], other.elems[row][col]))
+                if (!elems[row][col].eq(other.elems[row][col]))
                     return false
             }
         }
