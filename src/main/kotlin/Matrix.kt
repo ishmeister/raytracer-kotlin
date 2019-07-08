@@ -1,6 +1,6 @@
 package com.bhana
 
-class Matrix(val elems: Array<Array<Double>>) {
+class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
