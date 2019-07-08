@@ -19,7 +19,7 @@ class PpmImage(private val canvas: Canvas) {
             var lineLength = 0
 
             for (x in 0 until canvas.width) {
-                val pixel = canvas.getPixel(x, y).clip()
+                val pixel = canvas[x, y].clip()
 
                 val rStr = toScaledInt(pixel.r).toString()
                 val gStr = toScaledInt(pixel.g).toString()

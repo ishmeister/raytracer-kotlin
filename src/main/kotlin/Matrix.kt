@@ -1,6 +1,8 @@
 package com.bhana
 
-class Matrix(val size: Int, val elems: Array<DoubleArray>) {
+class Matrix(val size: Int) {
+
+    val elems = Array(size) { DoubleArray(size) { 0.0 } }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -35,8 +37,30 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
     }
 
     operator fun get(row: Int, col: Int): Double = elems[row][col]
+
     operator fun set(row: Int, col: Int, value: Double) {
         elems[row][col] = value
+    }
+
+    operator fun times(other: Matrix): Matrix {
+        val m = Matrix(size)
+        for (row in 0 until size) {
+            for (col in 0 until size) {
+                m[row, col] = elems[row][0] * other.elems[0][col] +
+                        elems[row][1] * other.elems[1][col] +
+                        elems[row][2] * other.elems[2][col] +
+                        elems[row][3] * other.elems[3][col]
+            }
+        }
+        return m
+    }
+
+    operator fun times(other: Tuple): Tuple {
+        val x = elems[0][0] * other.x + elems[0][1] * other.y + elems[0][2] * other.z + elems[0][3] * other.w
+        val y = elems[1][0] * other.x + elems[1][1] * other.y + elems[1][2] * other.z + elems[1][3] * other.w
+        val z = elems[2][0] * other.x + elems[2][1] * other.y + elems[2][2] * other.z + elems[2][3] * other.w
+        val w = elems[3][0] * other.x + elems[3][1] * other.y + elems[3][2] * other.z + elems[3][3] * other.w
+        return Tuple(x, y, z, w)
     }
 }
 

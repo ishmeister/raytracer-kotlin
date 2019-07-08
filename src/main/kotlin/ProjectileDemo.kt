@@ -36,7 +36,7 @@ fun main() {
         proj = tick(env, proj)
         val x = proj.position.x.toInt()
         val y = canvas.height - proj.position.y.toInt()
-        canvas.writePixel(x, y, colour)
+        canvas[x, y] = colour
     }
 
     val ppm = PpmImage(canvas)

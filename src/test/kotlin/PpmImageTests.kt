@@ -29,9 +29,9 @@ class PpmImageTests {
         val c2 = Colour(0.0, 0.5, 0.0)
         val c3 = Colour(-0.5, 0.0, 1.0)
 
-        canvas.writePixel(0, 0, c1)
-        canvas.writePixel(2, 1, c2)
-        canvas.writePixel(4, 2, c3)
+        canvas[0, 0] = c1
+        canvas[2, 1] = c2
+        canvas[4, 2] = c3
 
         val ppm = PpmImage(canvas)
         var writer = StringWriter()
@@ -50,7 +50,7 @@ class PpmImageTests {
         val canvas = Canvas(10, 2)
         for (x in 0 until canvas.width) {
             for (y in 0 until canvas.height) {
-                canvas.writePixel(x, y, Colour(1.0, 0.8, 0.6))
+                canvas[x, y] = Colour(1.0, 0.8, 0.6)
             }
         }
 

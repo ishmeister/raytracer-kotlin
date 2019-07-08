@@ -22,21 +22,21 @@ class CanvasTests {
     @Test
     fun `Writing pixels to a Canvas`() {
         val c = Canvas(10, 20)
-        c.writePixel(2, 3, Colour(1.0, 0.0, 0.0))
-        assertEquals(Colour(1.0, 0.0, 0.0), c.getPixel(2, 3))
+        c[2, 3] = Colour(1.0, 0.0, 0.0)
+        assertEquals(Colour(1.0, 0.0, 0.0), c[2, 3])
     }
 
     @Test
     fun `Writing positive off Canvas pixels does not throw exception`() {
         val c = Canvas(10, 20)
-        c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
+        c[-10, -20] = Colour(1.0, 0.0, 0.0)
     }
 
     @Test
     fun `Writing negative off Canvas pixels does not throw exception`() {
         val c = Canvas(10, 20)
         assertFalse(c.isOnCanvas(10, 20))
-        c.writePixel(-10, -20, Colour(1.0, 0.0, 0.0))
+        c[-10, -20] = Colour(1.0, 0.0, 0.0)
     }
 
     @Test
@@ -45,7 +45,7 @@ class CanvasTests {
         assertFalse(c.isOnCanvas(10, 20))
 
         val exception = assertThrows(IllegalStateException::class.java) {
-            c.getPixel(10, 20)
+            c[10, 20]
         }
         assertNotNull(exception)
     }
