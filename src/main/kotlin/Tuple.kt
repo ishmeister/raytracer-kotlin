@@ -26,6 +26,7 @@ open class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
+        if (javaClass != other?.javaClass) return false
         other as Tuple
         return feq(x, other.x) && feq(y, other.y) && feq(z, other.z) && feq(w, other.w)
     }
@@ -39,11 +40,12 @@ open class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
     }
 
     override fun toString(): String = "Tuple(x=$x, y=$y, z=$z, w=$w)"
+    operator fun plus(other: Tuple) = Tuple(x + other.x, y + other.y, z + other.z, w + other.w)
+    operator fun minus(other: Tuple) = Tuple(x - other.x, y - other.y, z - other.z, w - other.w)
+    operator fun unaryMinus() = Tuple(-x, -y, -z, -w)
+    operator fun times(scalar: Double) = Tuple(x * scalar, y * scalar, z * scalar, w * scalar)
+    operator fun div(scalar: Double) = Tuple(x / scalar, y / scalar, z / scalar, w / scalar)
 }
 
-operator fun Tuple.plus(other: Tuple) = Tuple(x + other.x, y + other.y, z + other.z, w + other.w)
-operator fun Tuple.minus(other: Tuple) = Tuple(x - other.x, y - other.y, z - other.z, w - other.w)
-operator fun Tuple.unaryMinus() = Tuple(-x, -y, -z, -w)
-operator fun Tuple.times(scalar: Double) = Tuple(x * scalar, y * scalar, z * scalar, w * scalar)
-operator fun Tuple.div(scalar: Double) = Tuple(x / scalar, y / scalar, z / scalar, w / scalar)
+
 

@@ -1,10 +1,10 @@
 package com.bhana
 
 class Matrix(val elems: Array<Array<Double>>) {
-    
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-
+        if (javaClass != other?.javaClass) return false
         other as Matrix
 
         if (elems.size != other.elems.size) return false
@@ -33,9 +33,10 @@ class Matrix(val elems: Array<Array<Double>>) {
         }
         return "Matrix(elems=\n$builder)"
     }
+
+    operator fun get(row: Int, col: Int): Double = elems[row][col]
+    operator fun set(row: Int, col: Int, value: Double) {
+        elems[row][col] = value
+    }
 }
 
-operator fun Matrix.get(row: Int, col: Int): Double = elems[row][col]
-operator fun Matrix.set(row: Int, col: Int, value: Double) {
-    elems[row][col] = value
-}
