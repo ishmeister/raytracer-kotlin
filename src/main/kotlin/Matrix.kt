@@ -1,8 +1,10 @@
 package com.bhana
 
-class Matrix(val size: Int) {
+class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
-    val elems = Array(size) { DoubleArray(size) { 0.0 } }
+    init {
+        require(size > 0 && size == elems.size && size == elems[0].size) { "invalid matrix of size: $size" }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -29,11 +31,11 @@ class Matrix(val size: Int) {
         var builder = StringBuilder()
         for (row in elems) {
             for (col in row) {
-                builder.append(col).append(" ")
+                builder.append("$col ")
             }
             builder.append("\n")
         }
-        return "Matrix(elems=\n$builder)"
+        return "Matrix(size=$size, elems=\n$builder)"
     }
 
     operator fun get(row: Int, col: Int): Double = elems[row][col]
@@ -43,16 +45,16 @@ class Matrix(val size: Int) {
     }
 
     operator fun times(other: Matrix): Matrix {
-        val m = Matrix(size)
+        val m = Array(size) { DoubleArray(size) { 0.0 } }
         for (row in 0 until size) {
             for (col in 0 until size) {
-                m[row, col] = elems[row][0] * other.elems[0][col] +
+                m[row][col] = elems[row][0] * other.elems[0][col] +
                         elems[row][1] * other.elems[1][col] +
                         elems[row][2] * other.elems[2][col] +
                         elems[row][3] * other.elems[3][col]
             }
         }
-        return m
+        return Matrix(size, m)
     }
 
     operator fun times(other: Tuple): Tuple {
@@ -62,5 +64,17 @@ class Matrix(val size: Int) {
         val w = elems[3][0] * other.x + elems[3][1] * other.y + elems[3][2] * other.z + elems[3][3] * other.w
         return Tuple(x, y, z, w)
     }
+
+    fun transpose(): Matrix {
+        val m = Array(size) { DoubleArray(size) { 0.0 } }
+        for (row in 0 until size) {
+            for (col in 0 until size) {
+                m[col][row] = elems[row][col]
+            }
+        }
+        return Matrix(size, m)
+    }
+
+
 }
 
