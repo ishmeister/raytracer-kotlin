@@ -1,10 +1,5 @@
 package com.bhana
 
-import kotlin.math.max
-import kotlin.math.min
-
-fun clamp(value: Double, min: Double, max: Double): Double = max(min, min(value, max))
-
 class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
 
     fun clip(): Colour {

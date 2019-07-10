@@ -24,8 +24,8 @@ class PpmImage(private val canvas: Canvas) {
                 val rStr = toScaledInt(pixel.r).toString()
                 val gStr = toScaledInt(pixel.g).toString()
                 val bStr = toScaledInt(pixel.b).toString()
-
                 val components = arrayOf(rStr, gStr, bStr)
+
                 for (i in 0 until components.size) {
                     val c = components[i]
 

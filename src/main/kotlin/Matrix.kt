@@ -19,7 +19,6 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
                     return false
             }
         }
-
         return true
     }
 
@@ -29,6 +28,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
     override fun toString(): String {
         var builder = StringBuilder()
+
         for (row in elems) {
             for (col in row) {
                 builder.append("$col ")
@@ -46,6 +46,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
     operator fun times(other: Matrix): Matrix {
         val m = Array(size) { DoubleArray(size) { 0.0 } }
+
         for (row in 0 until size) {
             for (col in 0 until size) {
                 m[row][col] = elems[row][0] * other.elems[0][col] +
@@ -67,6 +68,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
     fun transpose(): Matrix {
         val m = Array(size) { DoubleArray(size) { 0.0 } }
+
         for (row in 0 until size) {
             for (col in 0 until size) {
                 m[col][row] = elems[row][col]
@@ -75,6 +77,55 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
         return Matrix(size, m)
     }
 
+    fun submatrix(row: Int, col: Int): Matrix {
+        val m = Array(size - 1) { DoubleArray(size - 1) { 0.0 } }
 
+        var ix = 0
+        var iy = 0
+
+        for (x in 0 until size) {
+            if (x == row) continue
+            for (y in 0 until size) {
+                if (y == col) continue
+                m[ix][iy++] = elems[x][y]
+            }
+            iy = 0
+            ix++
+        }
+        return Matrix(size - 1, m)
+    }
+
+    fun determinant(): Double {
+        var determinant = 0.0
+        if (size == 2) {
+            determinant = elems[0][0] * elems[1][1] - elems[0][1] * elems[1][0]
+        } else {
+            for (col in 0 until size) {
+                determinant += elems[0][col] * cofactor(0, col)
+            }
+        }
+        return determinant
+    }
+
+    fun minor(row: Int, col: Int): Double = submatrix(row, col).determinant()
+
+    fun cofactor(row: Int, col: Int): Double = if ((row + col) % 2 == 0) minor(row, col) else -minor(row, col)
+
+    fun isInvertable(): Boolean = !determinant().eq(0.0)
+
+    fun inverse(): Matrix {
+        check(isInvertable())
+
+        val m = Array(size) { DoubleArray(size) { 0.0 } }
+
+        for (row in 0 until size) {
+            for (col in 0 until size) {
+                val c = cofactor(row, col)
+                m[col][row] = c / determinant()
+            }
+        }
+
+        return Matrix(size, m)
+    }
 }
 
