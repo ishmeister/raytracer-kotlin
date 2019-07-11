@@ -2,7 +2,7 @@ package com.bhana
 
 import kotlin.math.sqrt
 
-class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
+data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
 
     fun magnitude(): Double = sqrt(x * x + y * y + z * z)
 
@@ -23,15 +23,6 @@ class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w
         return x.eq(other.x) && y.eq(other.y) && z.eq(other.z) && w.eq(other.w)
     }
 
-    override fun hashCode(): Int {
-        var result = x.hashCode()
-        result = 31 * result + y.hashCode()
-        result = 31 * result + z.hashCode()
-        result = 31 * result + w.hashCode()
-        return result
-    }
-
-    override fun toString(): String = "Tuple(x=$x, y=$y, z=$z, w=$w)"
     operator fun plus(other: Tuple) = Tuple(x + other.x, y + other.y, z + other.z, w + other.w)
     operator fun minus(other: Tuple) = Tuple(x - other.x, y - other.y, z - other.z, w - other.w)
     operator fun unaryMinus() = Tuple(-x, -y, -z, -w)

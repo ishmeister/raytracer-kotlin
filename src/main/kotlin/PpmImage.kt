@@ -11,9 +11,7 @@ class PpmImage(private val canvas: Canvas) {
     private fun toScaledInt(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
     fun writeCanvasToPpm(writer: Writer) {
-        writer.write("P3\n")
-        writer.write("${canvas.width} ${canvas.height}\n")
-        writer.write("$MAX_COLOUR\n")
+        writeHeader(writer)
 
         for (y in 0 until canvas.height) {
             var lineLength = 0
@@ -24,6 +22,7 @@ class PpmImage(private val canvas: Canvas) {
                 val rStr = toScaledInt(pixel.r).toString()
                 val gStr = toScaledInt(pixel.g).toString()
                 val bStr = toScaledInt(pixel.b).toString()
+
                 val components = arrayOf(rStr, gStr, bStr)
 
                 for (i in 0 until components.size) {
@@ -32,8 +31,9 @@ class PpmImage(private val canvas: Canvas) {
                     writer.write(c)
                     lineLength += c.length
 
-                    // Add a new line when c = 3rd pixel component of last row pixel OR when max line length reached
+                    // Add a new line when c is 3rd pixel component of last row pixel OR when max line length reached
                     val eol = (i == 2 && x == canvas.width - 1) || lineLength + c.length >= MAX_LINE_LENGTH
+
                     if (eol) {
                         writer.write("\n")
                         lineLength = 0
@@ -44,5 +44,11 @@ class PpmImage(private val canvas: Canvas) {
                 }
             }
         }
+    }
+
+    private fun writeHeader(writer: Writer) {
+        writer.write("P3\n")
+        writer.write("${canvas.width} ${canvas.height}\n")
+        writer.write("$MAX_COLOUR\n")
     }
 }
