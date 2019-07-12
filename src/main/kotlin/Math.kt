@@ -4,15 +4,15 @@ import kotlin.math.*
 
 const val EPSILON = 0.00001
 
-fun Double.eq(other: Double): Boolean = abs(this - other) < EPSILON
+fun Double.eq(other: Double) = abs(this - other) < EPSILON
 
-fun clamp(value: Double, min: Double, max: Double): Double = max(min, min(value, max))
-fun radians(deg: Double): Double = (deg / 180) * PI
+fun clamp(value: Double, min: Double, max: Double) = max(min, min(value, max))
+fun radians(deg: Double) = (deg / 180) * PI
 
-fun vector(x: Double, y: Double, z: Double): Tuple = Tuple(x, y, z, 0.0)
-fun point(x: Double, y: Double, z: Double): Tuple = Tuple(x, y, z, 1.0)
+fun vector(x: Double, y: Double, z: Double) = Tuple(x, y, z, 0.0)
+fun point(x: Double, y: Double, z: Double) = Tuple(x, y, z, 1.0)
 
-fun identity(): Matrix = Matrix(
+fun identity() = Matrix(
     4, arrayOf(
         doubleArrayOf(1.0, 0.0, 0.0, 0.0),
         doubleArrayOf(0.0, 1.0, 0.0, 0.0),
@@ -21,7 +21,7 @@ fun identity(): Matrix = Matrix(
     )
 )
 
-fun translation(x: Double, y: Double, z: Double): Matrix = Matrix(
+fun translation(x: Double, y: Double, z: Double) = Matrix(
     4, arrayOf(
         doubleArrayOf(1.0, 0.0, 0.0, x),
         doubleArrayOf(0.0, 1.0, 0.0, y),
@@ -30,7 +30,7 @@ fun translation(x: Double, y: Double, z: Double): Matrix = Matrix(
     )
 )
 
-fun scaling(x: Double, y: Double, z: Double): Matrix = Matrix(
+fun scaling(x: Double, y: Double, z: Double) = Matrix(
     4, arrayOf(
         doubleArrayOf(x, 0.0, 0.0, 0.0),
         doubleArrayOf(0.0, y, 0.0, 0.0),
@@ -39,11 +39,38 @@ fun scaling(x: Double, y: Double, z: Double): Matrix = Matrix(
     )
 )
 
-fun rotationX(r: Double): Matrix = Matrix(
+fun rotationX(r: Double) = Matrix(
     4, arrayOf(
         doubleArrayOf(1.0, 0.0, 0.0, 0.0),
         doubleArrayOf(0.0, cos(r), -sin(r), 0.0),
         doubleArrayOf(0.0, sin(r), cos(r), 0.0),
+        doubleArrayOf(0.0, 0.0, 0.0, 1.0)
+    )
+)
+
+fun rotationY(r: Double) = Matrix(
+    4, arrayOf(
+        doubleArrayOf(cos(r), 0.0, sin(r), 0.0),
+        doubleArrayOf(0.0, 1.0, 0.0, 0.0),
+        doubleArrayOf(-sin(r), 0.0, cos(r), 0.0),
+        doubleArrayOf(0.0, 0.0, 0.0, 1.0)
+    )
+)
+
+fun rotationZ(r: Double) = Matrix(
+    4, arrayOf(
+        doubleArrayOf(cos(r), -sin(r), 0.0, 0.0),
+        doubleArrayOf(sin(r), cos(r), 0.0, 0.0),
+        doubleArrayOf(0.0, 0.0, 1.0, 0.0),
+        doubleArrayOf(0.0, 0.0, 0.0, 1.0)
+    )
+)
+
+fun shearing(xy: Double, xz: Double, yx: Double, yz: Double, zx: Double, zy: Double) = Matrix(
+    4, arrayOf(
+        doubleArrayOf(1.0, xy, xz, 0.0),
+        doubleArrayOf(yx, 1.0, yz, 0.0),
+        doubleArrayOf(zx, zy, 1.0, 0.0),
         doubleArrayOf(0.0, 0.0, 0.0, 1.0)
     )
 )

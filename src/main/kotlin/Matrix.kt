@@ -125,5 +125,12 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
         return Matrix(size, m)
     }
-}
 
+    fun translate(x: Double, y: Double, z: Double): Matrix = this * translation(x, y, z)
+    fun scale(x: Double, y: Double, z: Double): Matrix = this * scaling(x, y, z)
+    fun rotateX(r: Double): Matrix = this * rotationX(r)
+    fun rotateY(r: Double): Matrix = this * rotationY(r)
+    fun rotateZ(r: Double): Matrix = this * rotationZ(r)
+    fun shear(xy: Double, xz: Double, yx: Double, yz: Double, zx: Double, zy: Double) =
+        this * shearing(xy, xz, yx, yz, zx, zy)
+}

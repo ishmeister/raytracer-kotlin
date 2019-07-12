@@ -29,6 +29,3 @@ data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
     operator fun times(scalar: Double) = Tuple(x * scalar, y * scalar, z * scalar, w * scalar)
     operator fun div(scalar: Double) = Tuple(x / scalar, y / scalar, z / scalar, w / scalar)
 }
-
-
-
