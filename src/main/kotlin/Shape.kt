@@ -1,7 +1,10 @@
 package com.bhana
 
 abstract class Shape(val id: String) {
-    abstract fun intersect(ray: Ray): List<Intersection>
+
+    var transform: Matrix = identity()
+
+    abstract fun intersect(worldRay: Ray): List<Intersection>
     override fun toString(): String = "Shape(id='$id')"
 
     override fun equals(other: Any?): Boolean {

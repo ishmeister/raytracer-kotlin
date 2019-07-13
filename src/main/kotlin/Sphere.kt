@@ -4,7 +4,9 @@ import kotlin.math.sqrt
 
 class Sphere(id: String) : Shape(id) {
 
-    override fun intersect(ray: Ray): List<Intersection> {
+    override fun intersect(worldRay: Ray): List<Intersection> {
+        val ray = worldRay.transform(transform.inverse())
+
         val sphereToRay = ray.origin - point(0.0, 0.0, 0.0)
         val a = ray.direction.dot(ray.direction)
         val b = 2.0 * ray.direction.dot(sphereToRay)
