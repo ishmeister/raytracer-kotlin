@@ -10,6 +10,7 @@ class TupleTests {
     fun `Tuple equality`() {
         val p1 = point(1.1 + 2.2, -0.0, 3.0)
         val p2 = point(3.3, 0.0, 3.0)
+
         assertEquals(p1, p2)
         assertTrue(p1 == p2)
         assertFalse(p1 === p2)
@@ -18,6 +19,7 @@ class TupleTests {
     @Test
     fun `Point() creates a tuple with w=1`() {
         val p = point(4.0, -4.0, 3.0)
+
         assertEquals(4.0, p.x)
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
@@ -29,6 +31,7 @@ class TupleTests {
     @Test
     fun `Vector() creates a tuple with w=0`() {
         val p = vector(4.0, -4.0, 3.0)
+
         assertEquals(4.0, p.x)
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
@@ -42,6 +45,7 @@ class TupleTests {
         val p1 = point(3.0, -2.0, 5.0)
         val v = vector(-2.0, 3.0, 1.0)
         val p2 = p1 + v
+
         assertEquals(point(1.0, 1.0, 6.0), p2)
         assertTrue(p2.isPoint())
     }
@@ -51,6 +55,7 @@ class TupleTests {
         val p = vector(3.0, -2.0, 5.0)
         val v1 = vector(-2.0, 3.0, 1.0)
         val v2 = p + v1
+
         assertEquals(vector(1.0, 1.0, 6.0), v2)
         assertTrue(v2.isVector())
     }
@@ -60,6 +65,7 @@ class TupleTests {
         val p1 = point(3.0, 2.0, 1.0)
         val p2 = point(5.0, 6.0, 7.0)
         val v = p1 - p2
+
         assertEquals(vector(-2.0, -4.0, -6.0), v)
         assertTrue(v.isVector())
     }
@@ -69,6 +75,7 @@ class TupleTests {
         val p1 = point(3.0, 2.0, 1.0)
         val v = vector(5.0, 6.0, 7.0)
         val p2 = p1 - v
+
         assertEquals(point(-2.0, -4.0, -6.0), p2)
         assertTrue(p2.isPoint())
     }
@@ -78,6 +85,7 @@ class TupleTests {
         val v1 = vector(3.0, 2.0, 1.0)
         val v2 = vector(5.0, 6.0, 7.0)
         val v3 = v1 - v2
+
         assertEquals(vector(-2.0, -4.0, -6.0), v3)
         assertTrue(v3.isVector())
     }
@@ -87,6 +95,7 @@ class TupleTests {
         val v1 = vector(0.0, 0.0, 0.0)
         val v2 = vector(1.0, -2.0, 3.0)
         val v3 = v1 - v2
+
         assertEquals(vector(-1.0, 2.0, -3.0), v3)
     }
 
@@ -94,6 +103,7 @@ class TupleTests {
     fun `Negating a tuple`() {
         val t = Tuple(1.0, -2.0, 3.0, 4.0)
         val t2 = -t
+
         assertEquals(Tuple(-1.0, 2.0, -3.0, -4.0), t2)
     }
 
@@ -101,6 +111,7 @@ class TupleTests {
     fun `Multiplying a tuple by a scalar`() {
         val t = Tuple(1.0, -2.0, 3.0, -4.0)
         val t2 = t * 3.5
+
         assertEquals(Tuple(3.5, -7.0, 10.5, -14.0), t2)
     }
 
@@ -108,6 +119,7 @@ class TupleTests {
     fun `Multiplying a tuple by a fraction`() {
         val t = Tuple(1.0, -2.0, 3.0, -4.0)
         val t2 = t * 0.5
+
         assertEquals(Tuple(0.5, -1.0, 1.5, -2.0), t2)
     }
 
@@ -115,6 +127,7 @@ class TupleTests {
     fun `Dividing a tuple by a scalar`() {
         val t = Tuple(1.0, -2.0, 3.0, -4.0)
         val t2 = t / 2.0
+
         assertEquals(Tuple(0.5, -1.0, 1.5, -2.0), t2)
     }
 
@@ -170,6 +183,7 @@ class TupleTests {
     fun `Dot product of two vectors`() {
         val v1 = vector(1.0, 2.0, 3.0)
         val v2 = vector(2.0, 3.0, 4.0)
+
         assertEquals(20.0, v1.dot(v2))
     }
 
@@ -177,6 +191,7 @@ class TupleTests {
     fun `Cross product of two vectors`() {
         val v1 = vector(1.0, 2.0, 3.0)
         val v2 = vector(2.0, 3.0, 4.0)
+
         assertEquals(vector(-1.0, 2.0, -1.0), v1.cross(v2))
         assertEquals(vector(1.0, -2.0, 1.0), v2.cross(v1))
     }

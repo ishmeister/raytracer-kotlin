@@ -65,6 +65,7 @@ class MatrixTests {
                 doubleArrayOf(5.0, 4.0, 3.0, 2.0)
             )
         )
+
         val b = Matrix(
             4, arrayOf(
                 doubleArrayOf(1.0, 2.0, 3.0, 4.0),
@@ -73,6 +74,7 @@ class MatrixTests {
                 doubleArrayOf(5.0, 4.0, 3.0, 2.0)
             )
         )
+
         assertEquals(a, b)
         assertTrue(a == b)
         assertFalse(a === b)
@@ -88,6 +90,7 @@ class MatrixTests {
                 doubleArrayOf(5.0, 4.0, 3.0, 2.0)
             )
         )
+
         val b = Matrix(
             4, arrayOf(
                 doubleArrayOf(2.0, 3.0, 4.0, 5.0),
@@ -96,6 +99,7 @@ class MatrixTests {
                 doubleArrayOf(4.0, 3.0, 2.0, 1.0)
             )
         )
+        
         assertNotEquals(a, b)
         assertFalse(a == b)
         assertFalse(a === b)
