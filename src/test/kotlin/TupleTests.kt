@@ -1,10 +1,19 @@
 package com.bhana
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.math.sqrt
 
 class TupleTests {
+
+    @Test
+    fun `Tuple equality`() {
+        val p1 = point(1.1 + 2.2, -0.0, 3.0)
+        val p2 = point(3.3, 0.0, 3.0)
+        assertEquals(p1, p2)
+        assertTrue(p1 == p2)
+        assertFalse(p1 === p2)
+    }
 
     @Test
     fun `Point() creates a tuple with w=1`() {
@@ -13,6 +22,8 @@ class TupleTests {
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
         assertEquals(p.w, 1.0)
+        assertTrue(p.isPoint())
+        assertFalse(p.isVector())
     }
 
     @Test
@@ -22,22 +33,26 @@ class TupleTests {
         assertEquals(-4.0, p.y)
         assertEquals(3.0, p.z)
         assertEquals(p.w, 0.0)
+        assertTrue(p.isVector())
+        assertFalse(p.isPoint())
     }
 
     @Test
     fun `Adding a point to a vector makes a point`() {
-        val t1 = point(3.0, -2.0, 5.0)
-        val t2 = vector(-2.0, 3.0, 1.0)
-        val t3 = t1 + t2
-        assertEquals(point(1.0, 1.0, 6.0), t3)
+        val p1 = point(3.0, -2.0, 5.0)
+        val v = vector(-2.0, 3.0, 1.0)
+        val p2 = p1 + v
+        assertEquals(point(1.0, 1.0, 6.0), p2)
+        assertTrue(p2.isPoint())
     }
 
     @Test
     fun `Adding a vector to a vector makes a vector`() {
-        val t1 = vector(3.0, -2.0, 5.0)
-        val t2 = vector(-2.0, 3.0, 1.0)
-        val t3 = t1 + t2
-        assertEquals(vector(1.0, 1.0, 6.0), t3)
+        val p = vector(3.0, -2.0, 5.0)
+        val v1 = vector(-2.0, 3.0, 1.0)
+        val v2 = p + v1
+        assertEquals(vector(1.0, 1.0, 6.0), v2)
+        assertTrue(v2.isVector())
     }
 
     @Test
@@ -46,14 +61,16 @@ class TupleTests {
         val p2 = point(5.0, 6.0, 7.0)
         val v = p1 - p2
         assertEquals(vector(-2.0, -4.0, -6.0), v)
+        assertTrue(v.isVector())
     }
 
     @Test
     fun `Subtracting a vector from a point makes a point`() {
-        val p = point(3.0, 2.0, 1.0)
+        val p1 = point(3.0, 2.0, 1.0)
         val v = vector(5.0, 6.0, 7.0)
-        val p3 = p - v
-        assertEquals(point(-2.0, -4.0, -6.0), p3)
+        val p2 = p1 - v
+        assertEquals(point(-2.0, -4.0, -6.0), p2)
+        assertTrue(p2.isPoint())
     }
 
     @Test
@@ -62,6 +79,7 @@ class TupleTests {
         val v2 = vector(5.0, 6.0, 7.0)
         val v3 = v1 - v2
         assertEquals(vector(-2.0, -4.0, -6.0), v3)
+        assertTrue(v3.isVector())
     }
 
     @Test

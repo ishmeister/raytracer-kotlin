@@ -23,6 +23,9 @@ data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
         return x.eq(other.x) && y.eq(other.y) && z.eq(other.z) && w.eq(other.w)
     }
 
+    fun isPoint() = w == 1.0
+    fun isVector() = w == 0.0
+
     operator fun plus(other: Tuple) = Tuple(x + other.x, y + other.y, z + other.z, w + other.w)
     operator fun minus(other: Tuple) = Tuple(x - other.x, y - other.y, z - other.z, w - other.w)
     operator fun unaryMinus() = Tuple(-x, -y, -z, -w)

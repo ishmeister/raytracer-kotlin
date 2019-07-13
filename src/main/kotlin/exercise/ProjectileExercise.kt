@@ -1,5 +1,6 @@
-package com.bhana
+package com.bhana.demo
 
+import com.bhana.*
 import java.io.File
 
 class Projectile(val position: Tuple, val velocity: Tuple) {

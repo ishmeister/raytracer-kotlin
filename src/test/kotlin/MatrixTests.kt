@@ -74,6 +74,8 @@ class MatrixTests {
             )
         )
         assertEquals(a, b)
+        assertTrue(a == b)
+        assertFalse(a === b)
     }
 
     @Test
@@ -95,6 +97,8 @@ class MatrixTests {
             )
         )
         assertNotEquals(a, b)
+        assertFalse(a == b)
+        assertFalse(a === b)
     }
 
     @Test
