@@ -11,7 +11,9 @@ class Canvas(val width: Int, val height: Int) {
     }
 
     operator fun set(x: Int, y: Int, pixel: Colour) {
-        if (!isOnCanvas(x, y)) return
+        if (!isOnCanvas(x, y)) {
+            return
+        }
         pixels[x][y] = pixel
     }
 }
