@@ -4,10 +4,12 @@ import kotlin.math.sqrt
 
 class Sphere(id: String) : Shape(id) {
 
+    private val origin = point(0.0, 0.0, 0.0)
+
     override fun intersect(worldRay: Ray): List<Intersection> {
         val ray = worldRay.transform(transform.inverse())
 
-        val sphereToRay = ray.origin - point(0.0, 0.0, 0.0)
+        val sphereToRay = ray.origin - origin
         val a = ray.direction.dot(ray.direction)
         val b = 2.0 * ray.direction.dot(sphereToRay)
         val c = sphereToRay.dot(sphereToRay) - 1.0
@@ -22,5 +24,7 @@ class Sphere(id: String) : Shape(id) {
 
         return arrayListOf(Intersection(t1, this), Intersection(t2, this))
     }
+
+    fun normalAt(point: Tuple): Tuple = (point - origin).normalise()
 
 }

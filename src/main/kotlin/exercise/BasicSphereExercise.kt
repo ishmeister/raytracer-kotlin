@@ -17,7 +17,7 @@ fun main() {
 
     val canvas = Canvas(canvasPixels, canvasPixels)
 
-//    shape.transform = scaling(10.0, 10.0, 10.0)
+    shape.transform = shearing(1.0, 0.0, 0.0, 0.0, 0.0, 0.0) * scaling(0.5, 1.0, 1.0)
 
     for (y in 0 until canvasPixels) {
         val worldY = half - pixelSize * y
