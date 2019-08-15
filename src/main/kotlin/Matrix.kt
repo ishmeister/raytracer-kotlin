@@ -22,9 +22,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
         return true
     }
 
-    override fun hashCode(): Int {
-        return elems.contentDeepHashCode()
-    }
+    override fun hashCode(): Int = elems.contentDeepHashCode()
 
     override fun toString(): String {
         var builder = StringBuilder()

@@ -10,7 +10,7 @@ class PpmImage(private val canvas: Canvas) {
 
     private fun toScaledInt(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
-    fun writeCanvasToPpm(writer: Writer) {
+    fun write(writer: Writer) {
         writeHeader(writer)
 
         for (y in 0 until canvas.height) {

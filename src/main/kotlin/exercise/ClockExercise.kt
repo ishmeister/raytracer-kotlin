@@ -19,5 +19,5 @@ fun main() {
     val ppm = PpmImage(canvas)
     var writer = File("image.ppm").bufferedWriter()
 
-    ppm.writeCanvasToPpm(writer)
+    ppm.write(writer)
 }

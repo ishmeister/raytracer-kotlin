@@ -3,6 +3,7 @@ package com.bhana
 abstract class Shape(val id: String) {
 
     var transform: Matrix = identity()
+    var material: Material = Material()
 
     abstract fun intersect(worldRay: Ray): List<Intersection>
     override fun toString(): String = "Shape(id='$id')"
@@ -21,4 +22,6 @@ abstract class Shape(val id: String) {
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    abstract fun normalAt(worldPoint: Tuple): Tuple
 }

@@ -25,6 +25,11 @@ class Sphere(id: String) : Shape(id) {
         return arrayListOf(Intersection(t1, this), Intersection(t2, this))
     }
 
-    fun normalAt(point: Tuple): Tuple = (point - origin).normalise()
-
+    override fun normalAt(worldPoint: Tuple): Tuple {
+        val inverseTransform = transform.inverse()
+        val objectPoint = inverseTransform * worldPoint
+        val objectNormal = objectPoint - origin
+        val worldNormal = inverseTransform.transpose() * objectNormal
+        return vector(worldNormal.x, worldNormal.y, worldNormal.z).normalise()
+    }
 }

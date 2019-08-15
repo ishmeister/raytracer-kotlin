@@ -13,7 +13,7 @@ class PpmImageTests {
         val ppm = PpmImage(canvas)
         var writer = StringWriter()
 
-        ppm.writeCanvasToPpm(writer)
+        ppm.write(writer)
 
         val lines = writer.toString().lines()
 
@@ -36,7 +36,7 @@ class PpmImageTests {
         val ppm = PpmImage(canvas)
         var writer = StringWriter()
 
-        ppm.writeCanvasToPpm(writer)
+        ppm.write(writer)
 
         val lines = writer.toString().lines()
 
@@ -57,7 +57,7 @@ class PpmImageTests {
         val ppm = PpmImage(canvas)
         var writer = StringWriter()
 
-        ppm.writeCanvasToPpm(writer)
+        ppm.write(writer)
 
         val lines = writer.toString().lines()
 
@@ -77,7 +77,7 @@ class PpmImageTests {
         val ppm = PpmImage(canvas)
         var writer = StringWriter()
 
-        ppm.writeCanvasToPpm(writer)
+        ppm.write(writer)
 
         val file = writer.toString()
         assertEquals('\n', file.last())

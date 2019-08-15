@@ -62,4 +62,40 @@ class SphereTests {
         val n = s.normalAt(point(sqrt(3.0) / 3.0, sqrt(3.0) / 3.0, sqrt(3.0) / 3.0))
         assertEquals(n.normalise(), n)
     }
+
+    @Test
+    fun `The normal is a normalised vector`() {
+        val s = Sphere("s")
+        val n = s.normalAt(point(sqrt(3.0) / 3.0, sqrt(3.0) / 3.0, sqrt(3.0) / 3.0))
+        assertEquals(n.normalise(), n)
+    }
+
+    @Test
+    fun `Computing the normal on a translated sphere`() {
+        val s = Sphere("s")
+        s.transform = translation(0.0, 1.0, 0.0)
+        val n = s.normalAt(point(0.0, 1.70711, -0.70711))
+        assertEquals(vector(0.0, 0.70711, -0.70711), n)
+    }
+
+    @Test
+    fun `Computing the normal on a transformed sphere`() {
+        val s = Sphere("s")
+        s.transform = scaling(1.0, 0.5, 1.0) * rotationZ(Math.PI / 5.0)
+        val n = s.normalAt(point(0.0, sqrt(2.0) / 2.0, -(sqrt(2.0) / 2.0)))
+        assertEquals(vector(0.0, 0.97014, -0.24254), n)
+    }
+
+    @Test
+    fun `A sphere has a default material`() {
+        val s = Sphere("s")
+        assertEquals(Material(), s.material)
+    }
+
+    @Test
+    fun `A sphere may be assigned a material`() {
+        val s = Sphere("s")
+        s.material = Material(ambient = 1.0)
+        assertEquals(Material(ambient = 1.0), s.material)
+    }
 }

@@ -31,4 +31,6 @@ data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
     operator fun unaryMinus() = Tuple(-x, -y, -z, -w)
     operator fun times(scalar: Double) = Tuple(x * scalar, y * scalar, z * scalar, w * scalar)
     operator fun div(scalar: Double) = Tuple(x / scalar, y / scalar, z / scalar, w / scalar)
+
+    fun reflect(normal: Tuple): Tuple = this - normal * 2.0 * dot(normal)
 }

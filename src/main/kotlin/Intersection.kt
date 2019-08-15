@@ -11,7 +11,6 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-
         other as Intersection
 
         if (!t.eq(other.t)) return false
@@ -19,17 +18,8 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
 
         return true
     }
-
-    override fun hashCode(): Int {
-        var result = t.hashCode()
-        result = 31 * result + shape.hashCode()
-        return result
-    }
-
-
 }
 
-fun hit(intersections: List<Intersection>): Intersection? {
-    return if (intersections.isEmpty()) null
+fun hit(intersections: List<Intersection>): Intersection? =
+    if (intersections.isEmpty()) null
     else intersections.sorted().firstOrNull { i -> i.t.eq(0.0) || i.t > 0.0 }
-}

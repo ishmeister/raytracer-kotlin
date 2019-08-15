@@ -196,4 +196,20 @@ class TupleTests {
         assertEquals(vector(1.0, -2.0, 1.0), v2.cross(v1))
     }
 
+    @Test
+    fun `Reflecting a vector approaching at 45 deg`() {
+        val v = vector(1.0, -1.0, 0.0)
+        val n = vector(0.0, 1.0, 0.0)
+        val r = v.reflect(n)
+        assertEquals(vector(1.0, 1.0, 0.0), r)
+    }
+
+    @Test
+    fun `Reflecting a vector off a slanted surface`() {
+        val v = vector(0.0, -1.0, 0.0)
+        val n = vector(sqrt(2.0) / 2.0, sqrt(2.0) / 2.0, 0.0)
+        val r = v.reflect(n)
+        assertEquals(vector(1.0, 0.0, 0.0), r)
+    }
+
 }
