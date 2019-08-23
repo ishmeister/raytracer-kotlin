@@ -9,7 +9,7 @@ class WorldTests {
     @Test
     fun `Creating a world`() {
         val w = World()
-        assertTrue(w.objects.isEmpty())
+        assertTrue(w.shapes.isEmpty())
         assertTrue(w.lights.isEmpty())
     }
 
@@ -25,8 +25,8 @@ class WorldTests {
         val w = defaultWorld()
 
         assertEquals(light, w.lights[0])
-        assertEquals(s1, w.objects[0])
-        assertEquals(s2, w.objects[1])
+        assertEquals(s1, w.shapes[0])
+        assertEquals(s2, w.shapes[1])
     }
 
     @Test
@@ -41,5 +41,33 @@ class WorldTests {
         assertEquals(4.5, intersections[1].t)
         assertEquals(5.5, intersections[2].t)
         assertEquals(6.0, intersections[3].t)
+    }
+
+    @Test
+    fun `Shading an intersection`() {
+        val w = defaultWorld()
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val shape = w.shapes[0]
+
+        val i = Intersection(4.0, shape)
+        val comps = prepareComputations(i, r)
+        val c = w.shadeHit(comps)
+
+        assertEquals(Colour(0.38066, 0.47583, 0.2855), c)
+    }
+
+    @Test
+    fun `Shading an intersection from the inside`() {
+        val w = defaultWorld()
+        w.lights[0] = PointLight(point(0.0, 0.25, 0.0), WHITE)
+
+        val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 0.0, 1.0))
+        val shape = w.shapes[1]
+
+        val i = Intersection(0.5, shape)
+        val comps = prepareComputations(i, r)
+        val c = w.shadeHit(comps)
+
+        assertEquals(Colour(0.90498, 0.90498, 0.90498), c)
     }
 }

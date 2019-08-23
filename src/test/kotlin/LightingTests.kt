@@ -24,7 +24,7 @@ class LightingTests {
         val eyeVec = vector(0.0, 0.0, -1.0)
         val normalVec = vector(0.0, 0.0, -1.0)
         val light = PointLight(point(0.0, 0.0, -10.0), Colour(1.0, 1.0, 1.0))
-        val result = lighting(material, light, position, eyeVec, normalVec)
+        val result = light.lighting(material, position, eyeVec, normalVec)
 
         assertEquals(Colour(1.9, 1.9, 1.9), result)
     }
@@ -37,7 +37,7 @@ class LightingTests {
         val eyeVec = vector(0.0, sqrt(2.0) / 2.0, -(sqrt(2.0) / 2.0))
         val normalVec = vector(0.0, 0.0, -1.0)
         val light = PointLight(point(0.0, 0.0, -10.0), Colour(1.0, 1.0, 1.0))
-        val result = lighting(material, light, position, eyeVec, normalVec)
+        val result = light.lighting(material, position, eyeVec, normalVec)
 
         assertEquals(Colour(1.0, 1.0, 1.0), result)
     }
@@ -50,7 +50,7 @@ class LightingTests {
         val eyeVec = vector(0.0, 0.0, -1.0)
         val normalVec = vector(0.0, 0.0, -1.0)
         val light = PointLight(point(0.0, 10.0, -10.0), Colour(1.0, 1.0, 1.0))
-        val result = lighting(material, light, position, eyeVec, normalVec)
+        val result = light.lighting(material, position, eyeVec, normalVec)
 
         assertEquals(Colour(0.7364, 0.7364, 0.7364), result)
     }
@@ -63,7 +63,7 @@ class LightingTests {
         val eyeVec = vector(0.0, -(sqrt(2.0) / 2.0), -(sqrt(2.0) / 2.0))
         val normalVec = vector(0.0, 0.0, -1.0)
         val light = PointLight(point(0.0, 10.0, -10.0), Colour(1.0, 1.0, 1.0))
-        val result = lighting(material, light, position, eyeVec, normalVec)
+        val result = light.lighting(material, position, eyeVec, normalVec)
 
         assertEquals(Colour(1.6364, 1.6364, 1.6364), result)
     }
@@ -76,7 +76,7 @@ class LightingTests {
         val eyeVec = vector(0.0, 0.0, -1.0)
         val normalVec = vector(0.0, 0.0, -1.0)
         val light = PointLight(point(0.0, 0.0, 10.0), Colour(1.0, 1.0, 1.0))
-        val result = lighting(material, light, position, eyeVec, normalVec)
+        val result = light.lighting(material, position, eyeVec, normalVec)
 
         assertEquals(Colour(0.1, 0.1, 0.1), result)
     }
