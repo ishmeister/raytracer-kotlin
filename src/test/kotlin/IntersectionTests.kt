@@ -1,7 +1,6 @@
 package com.bhana
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class IntersectionTests {
@@ -129,5 +128,44 @@ class IntersectionTests {
         val i = hit(arrayListOf(i1, i2, i3, i4))
 
         assertEquals(i4, i)
+    }
+
+    @Test
+    fun `Pre-computing the state of an intersection`() {
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val shape = Sphere("s1")
+        val i = Intersection(4.0, shape)
+        val comps = prepareComputations(i, r)
+
+        assertEquals(i.t, comps.t)
+        assertEquals(shape, comps.shape)
+        assertEquals(point(0.0, 0.0, -1.0), comps.point)
+        assertEquals(vector(0.0, 0.0, -1.0), comps.eyeVec)
+        assertEquals(vector(0.0, 0.0, -1.0), comps.normalVec)
+    }
+
+    @Test
+    fun `The hit, when an intersection occurs on the outside`() {
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val shape = Sphere("s1")
+        val i = Intersection(4.0, shape)
+        val comps = prepareComputations(i, r)
+
+        assertFalse(comps.inside)
+    }
+
+    @Test
+    fun `The hit, when an intersection occurs on the inside`() {
+        val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 0.0, 1.0))
+        val shape = Sphere("s1")
+        val i = Intersection(1.0, shape)
+        val comps = prepareComputations(i, r)
+
+        assertTrue(comps.inside)
+        assertEquals(i.t, comps.t)
+        assertEquals(shape, comps.shape)
+        assertEquals(point(0.0, 0.0, 1.0), comps.point)
+        assertEquals(vector(0.0, 0.0, -1.0), comps.eyeVec)
+        assertEquals(vector(0.0, 0.0, -1.0), comps.normalVec)
     }
 }

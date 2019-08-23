@@ -2,17 +2,19 @@ package com.bhana
 
 import kotlin.math.sqrt
 
-class Sphere(id: String) : Shape(id) {
+// All spheres are unit spheres centered at origin
+const val radius = 1.0
+val center = point(0.0, 0.0, 0.0)
 
-    private val origin = point(0.0, 0.0, 0.0)
+class Sphere(id: String) : Shape(id) {
 
     override fun intersect(worldRay: Ray): List<Intersection> {
         val ray = worldRay.transform(transform.inverse())
 
-        val sphereToRay = ray.origin - origin
+        val sphereToRay = ray.origin - center
         val a = ray.direction.dot(ray.direction)
         val b = 2.0 * ray.direction.dot(sphereToRay)
-        val c = sphereToRay.dot(sphereToRay) - 1.0
+        val c = sphereToRay.dot(sphereToRay) - radius * radius
         val discriminant = b * b - 4.0 * a * c
 
         if (discriminant < 0.0) {
@@ -28,7 +30,7 @@ class Sphere(id: String) : Shape(id) {
     override fun normalAt(worldPoint: Tuple): Tuple {
         val inverseTransform = transform.inverse()
         val objectPoint = inverseTransform * worldPoint
-        val objectNormal = objectPoint - origin
+        val objectNormal = objectPoint - center
         val worldNormal = inverseTransform.transpose() * objectNormal
         return vector(worldNormal.x, worldNormal.y, worldNormal.z).normalise()
     }
