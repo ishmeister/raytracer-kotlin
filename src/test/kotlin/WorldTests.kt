@@ -70,4 +70,37 @@ class WorldTests {
 
         assertEquals(Colour(0.90498, 0.90498, 0.90498), c)
     }
+
+    @Test
+    fun `The colour when a ray misses`() {
+        val w = defaultWorld()
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 1.0, 0.0))
+        val c = w.colourAt(r)
+
+        assertEquals(BLACK, c)
+    }
+
+    @Test
+    fun `The colour when a ray hits`() {
+        val w = defaultWorld()
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val c = w.colourAt(r)
+
+        assertEquals(Colour(0.38066, 0.47583, 0.2855), c)
+    }
+
+    @Test
+    fun `The colour with an intersection behind the ray`() {
+        val w = defaultWorld()
+        val outer = w.shapes[0]
+        outer.material = Material(ambient = 1.0)
+
+        val inner = w.shapes[1]
+        inner.material = Material(ambient = 1.0)
+
+        val r = Ray(point(0.0, 0.0, 0.75), vector(0.0, 0.0, -1.0))
+        val c = w.colourAt(r)
+
+        assertEquals(inner.material.colour, c)
+    }
 }

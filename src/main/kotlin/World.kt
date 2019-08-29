@@ -24,4 +24,15 @@ class World {
     fun shadeHit(comps: Computations) =
         lights.map { l -> l.lighting(comps.shape.material, comps.point, comps.eyeVec, comps.normalVec) }
             .reduce { sum, colour -> sum + colour }
+
+    fun colourAt(ray: Ray): Colour? {
+        val intersections = intersect(ray)
+
+        return if (intersections.isEmpty()) BLACK
+        else {
+            val hit = intersections[0]
+            val comps = prepareComputations(hit, ray)
+            shadeHit(comps)
+        }
+    }
 }
