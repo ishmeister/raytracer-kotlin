@@ -209,7 +209,59 @@ class TransformationTests {
             .rotateY(radians(90.0))
             .rotateZ(radians(90.0))
         val p2 = m * p1
-        
+
         assertEquals(point(15.0, 5.0, 12.0), p2)
+    }
+
+    @Test
+    fun `The transformation matrix for the default orientation`() {
+        val from = point(0.0, 0.0, 0.0)
+        val to = point(0.0, 0.0, -1.0)
+        val up = vector(0.0, 1.0, 0.0)
+
+        val t = view(from, to, up)
+
+        assertEquals(identity(), t)
+    }
+
+    @Test
+    fun `The transformation matrix looking in the positive z direction`() {
+        val from = point(0.0, 0.0, 0.0)
+        val to = point(0.0, 0.0, 1.0)
+        val up = vector(0.0, 1.0, 0.0)
+
+        val t = view(from, to, up)
+
+        assertEquals(scaling(-1.0, 1.0, -1.0), t)
+    }
+
+    @Test
+    fun `The view transformation moves the world`() {
+        val from = point(0.0, 0.0, 8.0)
+        val to = point(0.0, 0.0, 0.0)
+        val up = vector(0.0, 1.0, 0.0)
+
+        val t = view(from, to, up)
+
+        assertEquals(translation(0.0, 0.0, -8.0), t)
+    }
+
+    @Test
+    fun `An arbitrary view transformation`() {
+        val from = point(1.0, 3.0, 2.0)
+        val to = point(4.0, -2.0, 8.0)
+        val up = vector(1.0, 1.0, 0.0)
+
+        val t = view(from, to, up)
+
+        val m = Matrix(
+            4, arrayOf(
+                doubleArrayOf(-0.50709, 0.50709, 0.67612, -2.36643),
+                doubleArrayOf(0.76772, 0.60609, 0.12122, -2.82843),
+                doubleArrayOf(-0.35857, 0.59761, -0.71714, 0.00000),
+                doubleArrayOf(0.00000, 0.00000, 0.00000, 1.00000)
+            )
+        )
+        assertEquals(m, t)
     }
 }

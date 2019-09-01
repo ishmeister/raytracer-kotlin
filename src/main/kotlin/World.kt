@@ -25,7 +25,7 @@ class World {
         lights.map { l -> l.lighting(comps.shape.material, comps.point, comps.eyeVec, comps.normalVec) }
             .reduce { sum, colour -> sum + colour }
 
-    fun colourAt(ray: Ray): Colour? {
+    fun colourAt(ray: Ray): Colour {
         val intersections = intersect(ray)
 
         return if (intersections.isEmpty()) BLACK

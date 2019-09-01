@@ -74,3 +74,21 @@ fun shearing(xy: Double, xz: Double, yx: Double, yz: Double, zx: Double, zy: Dou
         doubleArrayOf(0.0, 0.0, 0.0, 1.0)
     )
 )
+
+fun view(from: Tuple, to: Tuple, up: Tuple): Matrix {
+    val forward = (to - from).normalise()
+    val upN = up.normalise()
+    val left = forward.cross(upN)
+    val trueUp = left.cross(forward)
+
+    val orientation = Matrix(
+        4, arrayOf(
+            doubleArrayOf(left.x, left.y, left.z, 0.0),
+            doubleArrayOf(trueUp.x, trueUp.y, trueUp.z, 0.0),
+            doubleArrayOf(-forward.x, -forward.y, -forward.z, 0.0),
+            doubleArrayOf(0.0, 0.0, 0.0, 1.0)
+        )
+    )
+
+    return orientation * translation(-from.x, -from.y, -from.z)
+}
