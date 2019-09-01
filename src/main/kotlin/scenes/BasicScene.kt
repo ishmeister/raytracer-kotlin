@@ -2,7 +2,6 @@ package com.bhana.scenes
 
 import com.bhana.*
 import java.io.File
-import kotlin.system.measureTimeMillis
 
 fun main() {
     val world = World()
@@ -49,12 +48,7 @@ fun main() {
     val camera = Camera(600, 400, Math.PI / 3.0)
     camera.transform = view(point(0.0, 1.5, -5.0), point(0.0, 1.0, 0.0), vector(0.0, 1.0, 0.0))
 
-    var canvas: Canvas = Canvas(600, 400)
-
-    val timeElapsed = measureTimeMillis {
-        canvas = camera.render(world)
-    }
-    println("$timeElapsed")
+    val canvas = camera.render(world)
 
     val ppm = PpmImage(canvas)
     var writer = File("image.ppm").bufferedWriter()
