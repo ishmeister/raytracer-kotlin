@@ -2,8 +2,15 @@ package com.bhana
 
 abstract class Shape(val id: String) {
 
-    var transform: Matrix = identity()
     var material: Material = Material()
+
+    var transform: Matrix = identity()
+        set(value) {
+            field = value
+            inverseTransform = value.inverse()
+        }
+
+    protected var inverseTransform: Matrix = transform.inverse()
 
     abstract fun intersect(worldRay: Ray): List<Intersection>
     override fun toString(): String = "Shape(id='$id')"
@@ -24,4 +31,5 @@ abstract class Shape(val id: String) {
     }
 
     abstract fun normalAt(worldPoint: Tuple): Tuple
+
 }

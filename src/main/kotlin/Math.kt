@@ -3,6 +3,7 @@ package com.bhana
 import kotlin.math.*
 
 const val EPSILON = 0.00001
+val ORIGIN = point(0.0, 0.0, 0.0)
 
 fun Double.eq(other: Double) = abs(this - other) < EPSILON
 

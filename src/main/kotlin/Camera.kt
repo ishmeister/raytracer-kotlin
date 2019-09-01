@@ -35,7 +35,7 @@ class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
 
         val inverseT = transform.inverse()
         val pixel = inverseT * point(worldX, worldY, -1.0)
-        val origin = inverseT * point(0.0, 0.0, 0.0)
+        val origin = inverseT * ORIGIN
         val direction = (pixel - origin).normalise()
 
         return Ray(origin, direction)
