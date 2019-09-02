@@ -7,7 +7,14 @@ class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
     private val halfWidth: Double
     private val halfHeight: Double
     val pixelSize: Double
+
     var transform: Matrix = identity()
+        set(value) {
+            field = value
+            inverseTransform = value.inverse()
+        }
+
+    private var inverseTransform: Matrix = transform.inverse()
 
     init {
         require(hSize > 0) { "invalid hSize: hSize must be > 0 $hSize" }
@@ -33,7 +40,7 @@ class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
         val worldX = halfWidth - xOffset
         val worldY = halfHeight - yOffset
 
-        val inverseT = transform.inverse()
+        val inverseT = inverseTransform
         val pixel = inverseT * point(worldX, worldY, -1.0)
         val origin = inverseT * ORIGIN
         val direction = (pixel - origin).normalise()
