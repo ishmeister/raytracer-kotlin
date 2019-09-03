@@ -1,7 +1,6 @@
 package com.bhana
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class WorldTests {
@@ -68,7 +67,7 @@ class WorldTests {
         val comps = prepareComputations(i, r)
         val c = w.shadeHit(comps)
 
-        assertEquals(Colour(0.90498, 0.90498, 0.90498), c)
+        assertEquals(Colour(0.1, 0.1, 0.1), c)
     }
 
     @Test
@@ -102,5 +101,61 @@ class WorldTests {
         val c = w.colourAt(r)
 
         assertEquals(inner.material.colour, c)
+    }
+
+    @Test
+    fun `There is no shadow when nothing is collinear with point and light`() {
+        val w = defaultWorld()
+        val p = point(0.0, 10.0, 0.0)
+        val shadowed = w.isShadowed(p, w.lights[0])
+        assertFalse(shadowed)
+    }
+
+    @Test
+    fun `There is shadow when an object is between the point and the light`() {
+        val w = defaultWorld()
+        val p = point(10.0, -10.0, 10.0)
+        val shadowed = w.isShadowed(p, w.lights[0])
+
+        assertTrue(shadowed)
+    }
+
+    @Test
+    fun `There is no shadow when an object is behind the light`() {
+        val w = defaultWorld()
+        val p = point(-20.0, 20.0, -20.0)
+        val shadowed = w.isShadowed(p, w.lights[0])
+
+        assertFalse(shadowed)
+    }
+
+    @Test
+    fun `There is no shadow when an object is behind the point`() {
+        val w = defaultWorld()
+        val p = point(-2.0, 2.0, -2.0)
+        val shadowed = w.isShadowed(p, w.lights[0])
+
+        assertFalse(shadowed)
+    }
+
+    @Test
+    fun `shadeHit is given an intersection in shadow`() {
+        val w = World()
+        w.lights.add(PointLight(point(0.0, 0.0, -10.0), WHITE))
+
+        val s1 = Sphere("s1")
+        w.shapes.add(s1)
+
+        val s2 = Sphere("s2")
+        s2.transform = translation(0.0, 0.0, 10.0)
+        w.shapes.add(s2)
+
+        val r = Ray(point(0.0, 0.0, 5.0), vector(0.0, 0.0, 1.0))
+        val i = Intersection(4.0, s2)
+
+        val comps = prepareComputations(i, r)
+        val c = w.shadeHit(comps)
+
+        assertEquals(Colour(0.1, 0.1, 0.1), c)
     }
 }

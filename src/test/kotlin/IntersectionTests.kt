@@ -168,4 +168,17 @@ class IntersectionTests {
         assertEquals(vector(0.0, 0.0, -1.0), comps.eyeVec)
         assertEquals(vector(0.0, 0.0, -1.0), comps.normalVec)
     }
+
+    @Test
+    fun `The hit should offset the point`() {
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val shape = Sphere("s")
+        shape.transform = translation(0.0, 0.0, 1.0)
+
+        val i = Intersection(5.0, shape)
+        val comps = prepareComputations(i, r)
+
+        assertTrue(comps.overPoint.z < -EPSILON / 2.0)
+        assertTrue(comps.point.z > comps.overPoint.z)
+    }
 }

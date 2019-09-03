@@ -24,6 +24,7 @@ data class Computations(
     val t: Double,
     val shape: Shape,
     val point: Tuple,
+    val overPoint: Tuple,
     val eyeVec: Tuple,
     val normalVec: Tuple,
     val inside: Boolean
@@ -32,13 +33,21 @@ data class Computations(
 fun prepareComputations(intersection: Intersection, ray: Ray): Computations {
     val point = ray.position(intersection.t)
     val eyeVec = -ray.direction
-    var normalVec = intersection.shape.normalAt(point)
+    val normalVec = intersection.shape.normalAt(point)
 
-    return if (normalVec.dot(eyeVec) < 0) {
-        Computations(intersection.t, intersection.shape, point, eyeVec, -normalVec, inside = true)
-    } else {
-        Computations(intersection.t, intersection.shape, point, eyeVec, normalVec, inside = false)
-    }
+    // push point slightly in direction of normal to prevent self-shadowing
+    val overPoint = point + normalVec * EPSILON
+    val inside = normalVec.dot(eyeVec) < 0
+
+    return Computations(
+        t = intersection.t,
+        shape = intersection.shape,
+        point = point,
+        overPoint = overPoint,
+        eyeVec = eyeVec,
+        normalVec = if (inside) -normalVec else normalVec,
+        inside = inside
+    )
 }
 
 fun hit(intersections: List<Intersection>): Intersection? =

@@ -22,8 +22,15 @@ class World {
     fun intersect(worldRay: Ray): List<Intersection> = shapes.map { o -> o.intersect(worldRay) }.flatten().sorted()
 
     fun shadeHit(comps: Computations) =
-        lights.map { l -> l.lighting(comps.shape.material, comps.point, comps.eyeVec, comps.normalVec) }
-            .reduce { sum, colour -> sum + colour }
+        lights.map { l ->
+            l.lighting(
+                comps.shape.material,
+                comps.point,
+                comps.eyeVec,
+                comps.normalVec,
+                isShadowed(comps.overPoint, l)
+            )
+        }.reduce { sum, colour -> sum + colour }
 
     fun colourAt(ray: Ray): Colour {
         val intersections = intersect(ray)
@@ -34,5 +41,17 @@ class World {
             val comps = prepareComputations(hit, ray)
             shadeHit(comps)
         }
+    }
+
+    fun isShadowed(point: Tuple, light: PointLight): Boolean {
+        val vec = light.position - point
+        val distance = vec.magnitude()
+        val direction = vec.normalise()
+
+        val ray = Ray(point, direction)
+        val intersections = intersect(ray)
+        val hit = hit(intersections)
+
+        return hit != null && hit.t < distance
     }
 }
