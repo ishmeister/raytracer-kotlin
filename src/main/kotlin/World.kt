@@ -19,7 +19,8 @@ class World {
     val shapes = mutableListOf<Shape>()
     val lights = mutableListOf<PointLight>()
 
-    fun intersect(worldRay: Ray): List<Intersection> = shapes.map { o -> o.intersect(worldRay) }.flatten().sorted()
+    fun intersect(worldRay: Ray): List<Intersection> = shapes.map { o -> o.intersect(worldRay) }
+        .flatten().filter { i -> i.t >= 0 }.sorted()
 
     fun shadeHit(comps: Computations) =
         lights.map { l ->

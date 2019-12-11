@@ -5,23 +5,13 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    val floor = Sphere("floor")
-    floor.transform = scaling(10.0, 0.01, 10.0)
-    floor.material = Material(colour = Colour(1.0, 0.9, 0.9), specular = 0.0)
+    val floor = Plane("floor")
+    floor.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0)
 
-    val leftWall = Sphere("leftWall")
-    leftWall.transform = translation(0.0, 0.0, 5.0) *
-            rotationY(-Math.PI / 4.0) *
-            rotationX(Math.PI / 2.0) *
-            scaling(10.0, 0.01, 10.0)
-    leftWall.material = floor.material
-
-    val rightWall = Sphere("rightWall")
-    rightWall.transform = translation(0.0, 0.0, 5.0) *
-            rotationY(Math.PI / 4.0) *
-            rotationX(Math.PI / 2.0) *
-            scaling(10.0, 0.01, 10.0)
-    rightWall.material = floor.material
+    val backWall = Plane("leftWall")
+    backWall.transform =
+        translation(0.0, 0.0, 10.0) * rotationX(-Math.PI / 2.0)
+    backWall.material = floor.material
 
     val middleSphere = Sphere("middleSphere")
     middleSphere.transform = translation(-0.5, 1.0, 0.5)
@@ -39,14 +29,13 @@ fun main() {
 
     val world = World()
     world.shapes.add(floor)
-    world.shapes.add(leftWall)
-    world.shapes.add(rightWall)
+    world.shapes.add(backWall)
     world.shapes.add(middleSphere)
     world.shapes.add(rightSphere)
     world.shapes.add(leftSphere)
     world.lights.add(light)
 
-    val camera = Camera(600, 400, Math.PI / 3.0)
+    val camera = Camera(1600, 800, Math.PI / 3.0)
     camera.transform = view(point(0.0, 1.5, -5.0), point(0.0, 1.0, 0.0), vector(0.0, 1.0, 0.0))
 
     val timeElapsed = measureTimeMillis {

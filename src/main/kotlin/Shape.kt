@@ -10,9 +10,8 @@ abstract class Shape(val id: String) {
             inverseTransform = value.inverse()
         }
 
-    protected var inverseTransform: Matrix = transform.inverse()
+    private var inverseTransform: Matrix = transform.inverse()
 
-    abstract fun intersect(worldRay: Ray): List<Intersection>
     override fun toString(): String = "Shape(id='$id')"
 
     override fun equals(other: Any?): Boolean {
@@ -30,6 +29,20 @@ abstract class Shape(val id: String) {
         return id.hashCode()
     }
 
-    abstract fun normalAt(worldPoint: Tuple): Tuple
+    fun normalAt(worldPoint: Tuple): Tuple {
+        val localPoint = inverseTransform * worldPoint
+        val localNormal = normalAtLocal(localPoint)
+        var worldNormal = inverseTransform.transpose() * localNormal
+        return vector(worldNormal.x, worldNormal.y, worldNormal.z).normalise()
+    }
+
+    abstract fun normalAtLocal(localPoint: Tuple): Tuple
+
+    fun intersect(worldRay: Ray): List<Intersection> {
+        val localRay = worldRay.transform(inverseTransform)
+        return intersectLocal(localRay)
+    }
+
+    internal abstract fun intersectLocal(localRay: Ray): List<Intersection>
 
 }
