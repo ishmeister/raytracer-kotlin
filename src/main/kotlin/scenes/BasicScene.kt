@@ -6,7 +6,7 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     val floor = Plane("floor")
-    floor.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0)
+    floor.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0, pattern = StripePattern(WHITE, BLACK))
 
     val backWall = Plane("leftWall")
     backWall.transform =
@@ -19,7 +19,8 @@ fun main() {
 
     val rightSphere = Sphere("rightSphere")
     rightSphere.transform = translation(1.5, 0.5, -0.5) * scaling(0.5, 0.5, 0.5)
-    rightSphere.material = Material(colour = Colour(0.5, 1.0, 0.1), diffuse = 0.7, specular = 0.3)
+    rightSphere.material =
+        Material(colour = Colour(0.5, 1.0, 0.1), diffuse = 0.7, specular = 0.3)
 
     val leftSphere = Sphere("leftSphere")
     leftSphere.transform = translation(-1.5, 0.33, -0.75) * scaling(0.33, 0.33, 0.33)

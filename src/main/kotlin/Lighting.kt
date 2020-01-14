@@ -4,14 +4,10 @@ import kotlin.math.pow
 
 data class PointLight(val position: Tuple, val intensity: Colour) {
 
-    fun lighting(
-        material: Material,
-        point: Tuple,
-        eyeVec: Tuple,
-        normalVec: Tuple,
-        inShadow: Boolean
-    ): Colour {
-        val effectiveColour = material.colour * intensity
+    fun lighting(material: Material, point: Tuple, eyeVec: Tuple, normalVec: Tuple, inShadow: Boolean): Colour {
+        val colour = material.pattern?.stripeAt(point) ?: material.colour
+
+        val effectiveColour = colour * intensity
         val ambient = effectiveColour * material.ambient
 
         if (inShadow) return ambient
