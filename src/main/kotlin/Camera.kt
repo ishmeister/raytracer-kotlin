@@ -14,7 +14,8 @@ class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
             inverseTransform = value.inverse()
         }
 
-    private var inverseTransform: Matrix = transform.inverse()
+    var inverseTransform: Matrix = transform.inverse()
+        private set
 
     init {
         require(hSize > 0) { "invalid hSize: hSize must be > 0 $hSize" }

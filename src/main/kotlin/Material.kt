@@ -6,7 +6,7 @@ data class Material(
     var diffuse: Double = 0.9,
     var specular: Double = 0.9,
     var shininess: Double = 200.0,
-    var pattern: StripePattern? = null
+    var pattern: Pattern? = null
 ) {
     init {
         require(ambient in 0.0..1.0) { "invalid ambient: required 0.0..1.0 got $ambient" }

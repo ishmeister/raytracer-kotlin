@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test
 
 class MaterialTests {
 
+    private val shape = Sphere("s1")
+
     @Test
     fun `The default material`() {
         val material = Material()
@@ -25,7 +27,7 @@ class MaterialTests {
         val light = PointLight(point(0.0, 0.0, -10.0), WHITE)
         val inShadow = true
 
-        val result = light.lighting(material, ORIGIN, eyeV, normalV, inShadow)
+        val result = light.lighting(material, shape, ORIGIN, eyeV, normalV, inShadow)
 
         assertEquals(Colour(0.1, 0.1, 0.1), result)
     }
@@ -41,8 +43,8 @@ class MaterialTests {
         val light = PointLight(point(0.0, 0.0, -10.0), WHITE)
         val inShadow = false
 
-        val c1 = light.lighting(material, point(0.9, 0.0, 0.0), eyeV, normalV, inShadow)
-        val c2 = light.lighting(material, point(1.1, 0.0, 0.0), eyeV, normalV, inShadow)
+        val c1 = light.lighting(material, shape, point(0.9, 0.0, 0.0), eyeV, normalV, inShadow)
+        val c2 = light.lighting(material, shape, point(1.1, 0.0, 0.0), eyeV, normalV, inShadow)
 
         assertEquals(WHITE, c1)
         assertEquals(BLACK, c2)

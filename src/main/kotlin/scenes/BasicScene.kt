@@ -13,18 +13,23 @@ fun main() {
         translation(0.0, 0.0, 10.0) * rotationX(-Math.PI / 2.0)
     backWall.material = floor.material
 
+    val spherePattern = StripePattern(WHITE, GREY)
+    spherePattern.transform = rotationZ(0.5)
+
     val middleSphere = Sphere("middleSphere")
     middleSphere.transform = translation(-0.5, 1.0, 0.5)
-    middleSphere.material = Material(colour = Colour(0.1, 1.0, 0.5), diffuse = 0.7, specular = 0.3)
+    middleSphere.material =
+        Material(colour = Colour(0.1, 1.0, 0.5), diffuse = 0.7, specular = 0.3, pattern = spherePattern)
 
     val rightSphere = Sphere("rightSphere")
     rightSphere.transform = translation(1.5, 0.5, -0.5) * scaling(0.5, 0.5, 0.5)
     rightSphere.material =
-        Material(colour = Colour(0.5, 1.0, 0.1), diffuse = 0.7, specular = 0.3)
+        Material(colour = Colour(0.5, 1.0, 0.1), diffuse = 0.7, specular = 0.3, pattern = spherePattern)
 
     val leftSphere = Sphere("leftSphere")
     leftSphere.transform = translation(-1.5, 0.33, -0.75) * scaling(0.33, 0.33, 0.33)
-    leftSphere.material = Material(colour = Colour(1.0, 0.8, 0.1), diffuse = 0.7, specular = 0.3)
+    leftSphere.material =
+        Material(colour = Colour(1.0, 0.8, 0.1), diffuse = 0.7, specular = 0.3, pattern = spherePattern)
 
     val light = PointLight(point(-10.0, 10.0, -10.0), WHITE)
 

@@ -26,6 +26,7 @@ class World {
         lights.map { l ->
             l.lighting(
                 comps.shape.material,
+                comps.shape,
                 comps.point,
                 comps.eyeVec,
                 comps.normalVec,

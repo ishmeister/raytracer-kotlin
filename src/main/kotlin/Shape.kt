@@ -10,7 +10,8 @@ abstract class Shape(val id: String) {
             inverseTransform = value.inverse()
         }
 
-    private var inverseTransform: Matrix = transform.inverse()
+    var inverseTransform: Matrix = transform.inverse()
+        private set
 
     override fun toString(): String = "Shape(id='$id')"
 
