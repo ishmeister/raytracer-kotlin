@@ -70,4 +70,19 @@ class PatternTests {
 
         assertEquals(WHITE, pattern.patternAtShape(obj, point(2.5, 0.0, 0.0)))
     }
+
+    @Test
+    fun `The default pattern transformation`() {
+        val pattern = StripePattern(WHITE, BLACK)
+        
+        assertEquals(identity(), pattern.transform)
+    }
+
+    @Test
+    fun `Assigning a transformation`() {
+        val pattern = StripePattern(WHITE, BLACK)
+        pattern.transform = translation(1.0, 2.0, 3.0)
+
+        assertEquals(translation(1.0, 2.0, 3.0), pattern.transform)
+    }
 }
