@@ -14,7 +14,7 @@ abstract class Pattern {
 
     abstract fun patternAt(point: Tuple): Colour
 
-    fun stripeAtObject(shape: Shape, worldPoint: Tuple): Colour {
+    fun patternAtShape(shape: Shape, worldPoint: Tuple): Colour {
         val objectPoint = shape.inverseTransform * worldPoint
         val patternPoint = inverseTransform * objectPoint
         return patternAt(patternPoint)

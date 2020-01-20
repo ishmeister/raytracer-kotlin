@@ -49,7 +49,7 @@ class PatternTests {
         obj.transform = scaling(2.0, 2.0, 2.0)
         val pattern = StripePattern(WHITE, BLACK)
 
-        assertEquals(WHITE, pattern.stripeAtObject(obj, point(1.5, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAtShape(obj, point(1.5, 0.0, 0.0)))
     }
 
     @Test
@@ -58,7 +58,7 @@ class PatternTests {
         val pattern = StripePattern(WHITE, BLACK)
         pattern.transform = scaling(2.0, 2.0, 2.0)
 
-        assertEquals(WHITE, pattern.stripeAtObject(obj, point(1.5, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAtShape(obj, point(1.5, 0.0, 0.0)))
     }
 
     @Test
@@ -68,6 +68,6 @@ class PatternTests {
         val pattern = StripePattern(WHITE, BLACK)
         pattern.transform = translation(0.5, 0.0, 0.0)
 
-        assertEquals(WHITE, pattern.stripeAtObject(obj, point(2.5, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAtShape(obj, point(2.5, 0.0, 0.0)))
     }
 }

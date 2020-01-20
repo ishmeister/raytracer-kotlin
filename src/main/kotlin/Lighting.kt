@@ -12,7 +12,7 @@ data class PointLight(val position: Tuple, val intensity: Colour) {
         normalVec: Tuple,
         inShadow: Boolean
     ): Colour {
-        val colour = material.pattern?.stripeAtObject(shape, point) ?: material.colour
+        val colour = material.pattern?.patternAtShape(shape, point) ?: material.colour
 
         val effectiveColour = colour * intensity
         val ambient = effectiveColour * material.ambient
