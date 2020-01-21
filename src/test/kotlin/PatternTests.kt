@@ -6,6 +6,41 @@ import org.junit.jupiter.api.Test
 class PatternTests {
 
     @Test
+    fun `A pattern with an object transformation`() {
+        val shape = Sphere("s1")
+        shape.transform = scaling(2.0, 2.0, 2.0)
+
+        val pattern = TestPattern()
+        val c = pattern.patternAtShape(shape, point(2.0, 3.0, 4.0))
+
+        assertEquals(Colour(1.0, 1.5, 2.0), c)
+    }
+
+    @Test
+    fun `A pattern with pattern transformation`() {
+        val shape = Sphere("s1")
+        val pattern = TestPattern()
+        pattern.transform = scaling(2.0, 2.0, 2.0)
+
+        val c = pattern.patternAtShape(shape, point(2.0, 3.0, 4.0))
+
+        assertEquals(Colour(1.0, 1.5, 2.0), c)
+    }
+
+    @Test
+    fun `A pattern with both object and pattern transformation`() {
+        val shape = Sphere("s1")
+        shape.transform = scaling(2.0, 2.0, 2.0)
+
+        val pattern = TestPattern()
+        pattern.transform = translation(0.5, 1.0, 1.5)
+
+        val c = pattern.patternAtShape(shape, point(2.5, 3.0, 3.5))
+
+        assertEquals(Colour(0.75, 0.5, 0.25), c)
+    }
+
+    @Test
     fun `Creating a stripe pattern`() {
         val pattern = StripePattern(WHITE, BLACK)
 
@@ -17,64 +52,36 @@ class PatternTests {
     fun `A stripe pattern is constant in Y`() {
         val pattern = StripePattern(WHITE, BLACK)
 
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 0.0, 0.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 1.0, 0.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 2.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 1.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 2.0, 0.0)))
     }
 
     @Test
     fun `A stripe pattern is constant in Z`() {
         val pattern = StripePattern(WHITE, BLACK)
 
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 0.0, 0.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 0.0, 1.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 0.0, 2.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 1.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 2.0)))
     }
 
     @Test
     fun `A stripe pattern alternates in X`() {
         val pattern = StripePattern(WHITE, BLACK)
 
-        assertEquals(WHITE, pattern.stripeAt(point(0.0, 0.0, 0.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(0.9, 0.0, 0.0)))
-        assertEquals(BLACK, pattern.stripeAt(point(1.0, 0.0, 0.0)))
-        assertEquals(BLACK, pattern.stripeAt(point(-0.1, 0.0, 0.0)))
-        assertEquals(BLACK, pattern.stripeAt(point(-1.0, 0.0, 0.0)))
-        assertEquals(WHITE, pattern.stripeAt(point(-1.1, 0.0, 0.0)))
-    }
-
-    @Test
-    fun `Stripes with an object transformation`() {
-        val obj = Sphere("s1")
-        obj.transform = scaling(2.0, 2.0, 2.0)
-        val pattern = StripePattern(WHITE, BLACK)
-
-        assertEquals(WHITE, pattern.patternAtShape(obj, point(1.5, 0.0, 0.0)))
-    }
-
-    @Test
-    fun `Stripes with a pattern transformation`() {
-        val obj = Sphere("s1")
-        val pattern = StripePattern(WHITE, BLACK)
-        pattern.transform = scaling(2.0, 2.0, 2.0)
-
-        assertEquals(WHITE, pattern.patternAtShape(obj, point(1.5, 0.0, 0.0)))
-    }
-
-    @Test
-    fun `Stripes with both an object and a pattern transformation`() {
-        val obj = Sphere("s1")
-        obj.transform = scaling(2.0, 2.0, 2.0)
-        val pattern = StripePattern(WHITE, BLACK)
-        pattern.transform = translation(0.5, 0.0, 0.0)
-
-        assertEquals(WHITE, pattern.patternAtShape(obj, point(2.5, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.9, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(1.0, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(-0.1, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(-1.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(-1.1, 0.0, 0.0)))
     }
 
     @Test
     fun `The default pattern transformation`() {
         val pattern = StripePattern(WHITE, BLACK)
-        
+
         assertEquals(identity(), pattern.transform)
     }
 
@@ -84,5 +91,15 @@ class PatternTests {
         pattern.transform = translation(1.0, 2.0, 3.0)
 
         assertEquals(translation(1.0, 2.0, 3.0), pattern.transform)
+    }
+
+    @Test
+    fun `A gradient linearly interpolates between colours`() {
+        val pattern = GradientPattern(WHITE, BLACK)
+
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(Colour(0.75, 0.75, 0.75), pattern.patternAt(point(0.25, 0.0, 0.0)))
+        assertEquals(Colour(0.5, 0.5, 0.5), pattern.patternAt(point(0.5, 0.0, 0.0)))
+        assertEquals(Colour(0.25, 0.25, 0.25), pattern.patternAt(point(0.75, 0.0, 0.0)))
     }
 }

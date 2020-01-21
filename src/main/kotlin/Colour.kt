@@ -3,6 +3,8 @@ package com.bhana
 val BLACK: Colour = Colour(0.0, 0.0, 0.0)
 val WHITE: Colour = Colour(1.0, 1.0, 1.0)
 val GREY: Colour = Colour(0.8, 0.8, 0.8)
+val RED: Colour = Colour(1.0, 0.0, 0.0)
+val BLUE: Colour = Colour(0.0, 0.0, 1.0)
 
 data class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
 
