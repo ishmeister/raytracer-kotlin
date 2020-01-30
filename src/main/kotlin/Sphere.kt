@@ -7,7 +7,6 @@ private const val RADIUS = 1.0
 private val CENTER = ORIGIN
 
 class Sphere(id: String) : Shape(id) {
-
     override fun intersectLocal(localRay: Ray): List<Intersection> {
         val sphereToRay = localRay.origin - CENTER
         val a = localRay.direction.dot(localRay.direction)

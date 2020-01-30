@@ -1,7 +1,6 @@
 package com.bhana
 
 class Matrix(private val size: Int, val elements: Array<DoubleArray>) {
-
     init {
         require(size > 0 && size == elements.size && size == elements[0].size) { "invalid matrix of size: $size" }
     }

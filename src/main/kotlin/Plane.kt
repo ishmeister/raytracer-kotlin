@@ -6,7 +6,6 @@ import kotlin.math.abs
 private val NORMAL = vector(0.0, 1.0, 0.0)
 
 class Plane(id: String) : Shape(id) {
-
     override fun normalAtLocal(localPoint: Tuple): Tuple = NORMAL
 
     override fun intersectLocal(localRay: Ray): List<Intersection> =

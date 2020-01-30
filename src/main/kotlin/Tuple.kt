@@ -3,7 +3,6 @@ package com.bhana
 import kotlin.math.sqrt
 
 data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, val w: Double = 0.0) {
-
     fun magnitude(): Double = sqrt(x * x + y * y + z * z)
 
     fun normalise(): Tuple {

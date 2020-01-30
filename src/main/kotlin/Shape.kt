@@ -1,7 +1,6 @@
 package com.bhana
 
 abstract class Shape(val id: String) {
-
     var material: Material = Material()
 
     var transform: Matrix = identity()

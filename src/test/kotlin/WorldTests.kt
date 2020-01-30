@@ -49,7 +49,7 @@ class WorldTests {
         val shape = w.shapes[0]
 
         val i = Intersection(4.0, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
         val c = w.shadeHit(comps)
 
         assertEquals(Colour(0.38066, 0.47583, 0.2855), c)
@@ -64,7 +64,7 @@ class WorldTests {
         val shape = w.shapes[1]
 
         val i = Intersection(0.5, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
         val c = w.shadeHit(comps)
 
         assertEquals(Colour(0.1, 0.1, 0.1), c)
@@ -153,7 +153,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, 5.0), vector(0.0, 0.0, 1.0))
         val i = Intersection(4.0, s2)
 
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
         val c = w.shadeHit(comps)
 
         assertEquals(Colour(0.1, 0.1, 0.1), c)

@@ -22,7 +22,7 @@ class World {
     fun intersect(worldRay: Ray): List<Intersection> = shapes.map { it.intersect(worldRay) }
         .flatten().filter { it.t >= 0 }.sorted()
 
-    fun shadeHit(comps: Computations) =
+    fun shadeHit(comps: HitComputations) =
         lights.map {
             it.lighting(
                 comps.shape.material,
@@ -40,7 +40,7 @@ class World {
         return if (intersections.isEmpty()) BLACK
         else {
             val hit = intersections[0]
-            val comps = prepareComputations(hit, ray)
+            val comps = hit.prepareComputations(ray)
             shadeHit(comps)
         }
     }
@@ -52,7 +52,7 @@ class World {
 
         val ray = Ray(point, direction)
         val intersections = intersect(ray)
-        val hit = hit(intersections)
+        val hit = findHit(intersections)
 
         return hit != null && hit.t < distance
     }

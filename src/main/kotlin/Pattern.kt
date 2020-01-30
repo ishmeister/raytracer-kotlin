@@ -1,6 +1,7 @@
 package com.bhana
 
 import kotlin.math.floor
+import kotlin.math.sqrt
 
 abstract class Pattern {
     var transform: Matrix = identity()
@@ -9,8 +10,7 @@ abstract class Pattern {
             inverseTransform = value.inverse()
         }
 
-    var inverseTransform: Matrix = transform.inverse()
-        private set
+    private var inverseTransform: Matrix = transform.inverse()
 
     abstract fun patternAt(point: Tuple): Colour
 
@@ -21,10 +21,27 @@ abstract class Pattern {
     }
 }
 
-data class StripePattern(val a: Colour, val b: Colour) : Pattern() {
-    override fun patternAt(point: Tuple): Colour = if (floor(point.x) % 2.0 == 0.0) a else b
+class StripePattern(val a: Colour, val b: Colour) : Pattern() {
+    override fun patternAt(point: Tuple): Colour = when {
+        floor(point.x) % 2.0 == 0.0 -> a
+        else -> b
+    }
 }
 
-data class GradientPattern(val a: Colour, val b: Colour) : Pattern() {
+class GradientPattern(val a: Colour, val b: Colour) : Pattern() {
     override fun patternAt(point: Tuple): Colour = a + (b - a) * (point.x - floor(point.x))
+}
+
+class RingPattern(val a: Colour, val b: Colour) : Pattern() {
+    override fun patternAt(point: Tuple): Colour = when {
+        floor(sqrt(point.x * point.x + point.z * point.z)) % 2.0 == 0.0 -> a
+        else -> b
+    }
+}
+
+class CheckerPattern(val a: Colour, val b: Colour) : Pattern() {
+    override fun patternAt(point: Tuple): Colour = when {
+        (floor(point.x) + floor(point.y) + floor(point.z)) % 2.0 == 0.0 -> a
+        else -> b
+    }
 }

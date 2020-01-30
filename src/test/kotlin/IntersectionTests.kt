@@ -90,7 +90,7 @@ class IntersectionTests {
         val i1 = Intersection(1.0, s)
         val i2 = Intersection(2.0, s)
 
-        val i = hit(arrayListOf(i1, i2))
+        val i = findHit(arrayListOf(i1, i2))
 
         assertEquals(i1, i)
     }
@@ -101,7 +101,7 @@ class IntersectionTests {
         val i1 = Intersection(-1.0, s)
         val i2 = Intersection(1.0, s)
 
-        val i = hit(arrayListOf(i1, i2))
+        val i = findHit(arrayListOf(i1, i2))
 
         assertEquals(i2, i)
     }
@@ -112,7 +112,7 @@ class IntersectionTests {
         val i1 = Intersection(-2.0, s)
         val i2 = Intersection(-1.0, s)
 
-        val i = hit(arrayListOf(i1, i2))
+        val i = findHit(arrayListOf(i1, i2))
 
         assertNull(i)
     }
@@ -125,7 +125,7 @@ class IntersectionTests {
         val i3 = Intersection(-3.0, s)
         val i4 = Intersection(2.0, s)
 
-        val i = hit(arrayListOf(i1, i2, i3, i4))
+        val i = findHit(arrayListOf(i1, i2, i3, i4))
 
         assertEquals(i4, i)
     }
@@ -135,7 +135,7 @@ class IntersectionTests {
         val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
         val shape = Sphere("s1")
         val i = Intersection(4.0, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
 
         assertEquals(i.t, comps.t)
         assertEquals(shape, comps.shape)
@@ -149,7 +149,7 @@ class IntersectionTests {
         val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
         val shape = Sphere("s1")
         val i = Intersection(4.0, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
 
         assertFalse(comps.inside)
     }
@@ -159,7 +159,7 @@ class IntersectionTests {
         val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 0.0, 1.0))
         val shape = Sphere("s1")
         val i = Intersection(1.0, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
 
         assertTrue(comps.inside)
         assertEquals(i.t, comps.t)
@@ -176,7 +176,7 @@ class IntersectionTests {
         shape.transform = translation(0.0, 0.0, 1.0)
 
         val i = Intersection(5.0, shape)
-        val comps = prepareComputations(i, r)
+        val comps = i.prepareComputations(r)
 
         assertTrue(comps.overPoint.z < -EPSILON / 2.0)
         assertTrue(comps.point.z > comps.overPoint.z)

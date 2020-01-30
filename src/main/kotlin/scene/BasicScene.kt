@@ -1,27 +1,28 @@
-package com.bhana.scenes
+package com.bhana.scene
 
 import com.bhana.*
 import java.io.File
 import kotlin.system.measureTimeMillis
 
 fun main() {
+    val ringPattern = RingPattern(RED, BLUE)
+    val checkerPattern = CheckerPattern(GREY, BLACK)
+
     val floor = Plane("floor")
-    floor.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0, pattern = StripePattern(WHITE, BLACK))
+    floor.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0, pattern = ringPattern)
 
     val backWall = Plane("leftWall")
     backWall.transform =
         translation(0.0, 0.0, 10.0) * rotationX(-Math.PI / 2.0)
-    backWall.material = floor.material
+    backWall.material = Material(colour = Colour(0.9, 0.9, 0.9), specular = 0.0, pattern = checkerPattern)
 
     val spherePattern = StripePattern(WHITE, GREY)
-    spherePattern.transform = rotationZ(0.5)
-
-    val gradientPattern = GradientPattern(RED, BLUE)
+//    spherePattern.transform = rotationZ(0.5)
 
     val middleSphere = Sphere("middleSphere")
-    middleSphere.transform = translation(-0.5, 1.0, 0.5)
+    middleSphere.transform = translation(0.0, 1.0, 0.0)
     middleSphere.material =
-        Material(colour = Colour(0.1, 1.0, 0.5), diffuse = 0.7, specular = 0.3, pattern = gradientPattern)
+        Material(colour = Colour(0.1, 1.0, 0.5), diffuse = 0.7, specular = 0.3, pattern = spherePattern)
 
     val rightSphere = Sphere("rightSphere")
     rightSphere.transform = translation(1.5, 0.5, -0.5) * scaling(0.5, 0.5, 0.5)
@@ -37,7 +38,7 @@ fun main() {
 
     val world = World()
     world.shapes.add(floor)
-    world.shapes.add(backWall)
+//    world.shapes.add(backWall)
     world.shapes.add(middleSphere)
     world.shapes.add(rightSphere)
     world.shapes.add(leftSphere)

@@ -3,7 +3,6 @@ package com.bhana
 import kotlin.math.pow
 
 data class PointLight(val position: Tuple, val intensity: Colour) {
-
     fun lighting(
         material: Material,
         shape: Shape,

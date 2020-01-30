@@ -7,7 +7,6 @@ val RED: Colour = Colour(1.0, 0.0, 0.0)
 val BLUE: Colour = Colour(0.0, 0.0, 1.0)
 
 data class Colour(val r: Double = 0.0, val g: Double = 0.0, val b: Double = 0.0) {
-
     fun clip(): Colour =
         if (r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0) this
         else Colour(clamp(r, 0.0, 1.0), clamp(g, 0.0, 1.0), clamp(b, 0.0, 1.0))

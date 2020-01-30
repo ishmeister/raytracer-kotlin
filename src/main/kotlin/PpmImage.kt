@@ -7,7 +7,6 @@ const val MAX_COLOUR: Int = 255
 const val MAX_LINE_LENGTH: Int = 70
 
 class PpmImage(private val canvas: Canvas) {
-
     private fun toOutputColour(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
     fun write(writer: Writer) {

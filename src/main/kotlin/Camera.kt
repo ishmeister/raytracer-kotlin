@@ -3,7 +3,6 @@ package com.bhana
 import kotlin.math.tan
 
 class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
-
     val pixelSize: Double
 
     private val halfWidth: Double

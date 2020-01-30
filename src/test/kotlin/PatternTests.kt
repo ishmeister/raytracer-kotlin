@@ -102,4 +102,41 @@ class PatternTests {
         assertEquals(Colour(0.5, 0.5, 0.5), pattern.patternAt(point(0.5, 0.0, 0.0)))
         assertEquals(Colour(0.25, 0.25, 0.25), pattern.patternAt(point(0.75, 0.0, 0.0)))
     }
+
+    @Test
+    fun `A ring should extends in both x and z`() {
+        val pattern = RingPattern(WHITE, BLACK)
+
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(1.0, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(0.0, 0.0, 1.0)))
+        assertEquals(BLACK, pattern.patternAt(point(0.708, 0.708, 0.708)))
+    }
+
+    @Test
+    fun `Checkers should repeat in x`() {
+        val pattern = CheckerPattern(WHITE, BLACK)
+
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.99, 0.0, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(1.01, 0.0, 0.0)))
+    }
+
+    @Test
+    fun `Checkers should repeat in y`() {
+        val pattern = CheckerPattern(WHITE, BLACK)
+
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.99, 0.0)))
+        assertEquals(BLACK, pattern.patternAt(point(0.0, 1.01, 0.0)))
+    }
+
+    @Test
+    fun `Checkers should repeat in z`() {
+        val pattern = CheckerPattern(WHITE, BLACK)
+
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.0)))
+        assertEquals(WHITE, pattern.patternAt(point(0.0, 0.0, 0.99)))
+        assertEquals(BLACK, pattern.patternAt(point(0.0, 0.0, 1.01)))
+    }
 }
