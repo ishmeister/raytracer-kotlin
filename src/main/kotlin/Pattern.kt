@@ -21,11 +21,10 @@ abstract class Pattern {
     }
 }
 
-class StripePattern(val a: Colour, val b: Colour) : Pattern() {
+data class StripePattern(val a: Colour, val b: Colour) : Pattern() {
     override fun patternAt(point: Tuple): Colour = if (floor(point.x) % 2.0 == 0.0) a else b
 }
 
-class GradientPattern(val a: Colour, val b: Colour) : Pattern() {
+data class GradientPattern(val a: Colour, val b: Colour) : Pattern() {
     override fun patternAt(point: Tuple): Colour = a + (b - a) * (point.x - floor(point.x))
-
 }

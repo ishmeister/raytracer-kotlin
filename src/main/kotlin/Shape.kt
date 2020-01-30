@@ -26,14 +26,12 @@ abstract class Shape(val id: String) {
         return true
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode(): Int = id.hashCode()
 
     fun normalAt(worldPoint: Tuple): Tuple {
         val localPoint = inverseTransform * worldPoint
         val localNormal = normalAtLocal(localPoint)
-        var worldNormal = inverseTransform.transpose() * localNormal
+        val worldNormal = inverseTransform.transpose() * localNormal
         return vector(worldNormal.x, worldNormal.y, worldNormal.z).normalise()
     }
 

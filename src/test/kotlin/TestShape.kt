@@ -4,13 +4,10 @@ class TestShape : Shape("test") {
 
     var savedRay: Ray? = null
 
-    override fun intersectLocal(ray: Ray): List<Intersection> {
-        savedRay = ray
+    override fun intersectLocal(localRay: Ray): List<Intersection> {
+        savedRay = localRay
         return emptyList()
     }
 
-    override fun normalAtLocal(localPoint: Tuple): Tuple {
-        return return vector(localPoint.x, localPoint.y, localPoint.z)
-    }
-
+    override fun normalAtLocal(localPoint: Tuple): Tuple = vector(localPoint.x, localPoint.y, localPoint.z)
 }

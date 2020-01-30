@@ -1,9 +1,9 @@
 package com.bhana
 
-class Matrix(val size: Int, val elems: Array<DoubleArray>) {
+class Matrix(private val size: Int, val elements: Array<DoubleArray>) {
 
     init {
-        require(size > 0 && size == elems.size && size == elems[0].size) { "invalid matrix of size: $size" }
+        require(size > 0 && size == elements.size && size == elements[0].size) { "invalid matrix of size: $size" }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -11,35 +11,35 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
         if (javaClass != other?.javaClass) return false
         other as Matrix
 
-        if (elems.size != other.elems.size) return false
+        if (elements.size != other.elements.size) return false
 
-        for (row in 0 until elems.size) {
-            for (col in 0 until elems[row].size) {
-                if (!elems[row][col].eq(other.elems[row][col]))
+        for (row in 0 until elements.size) {
+            for (col in 0 until elements[row].size) {
+                if (!elements[row][col].eq(other.elements[row][col]))
                     return false
             }
         }
         return true
     }
 
-    override fun hashCode(): Int = elems.contentDeepHashCode()
+    override fun hashCode(): Int = elements.contentDeepHashCode()
 
     override fun toString(): String {
-        var builder = StringBuilder()
+        val builder = StringBuilder()
 
-        for (row in elems) {
+        for (row in elements) {
             for (col in row) {
                 builder.append("$col ")
             }
             builder.append("\n")
         }
-        return "Matrix(size=$size, elems=\n$builder)"
+        return "Matrix(size=$size, elements=\n$builder)"
     }
 
-    operator fun get(row: Int, col: Int): Double = elems[row][col]
+    operator fun get(row: Int, col: Int): Double = elements[row][col]
 
     operator fun set(row: Int, col: Int, value: Double) {
-        elems[row][col] = value
+        elements[row][col] = value
     }
 
     operator fun times(other: Matrix): Matrix {
@@ -47,20 +47,24 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
         for (row in 0 until size) {
             for (col in 0 until size) {
-                m[row][col] = elems[row][0] * other.elems[0][col] +
-                        elems[row][1] * other.elems[1][col] +
-                        elems[row][2] * other.elems[2][col] +
-                        elems[row][3] * other.elems[3][col]
+                m[row][col] = elements[row][0] * other.elements[0][col] +
+                        elements[row][1] * other.elements[1][col] +
+                        elements[row][2] * other.elements[2][col] +
+                        elements[row][3] * other.elements[3][col]
             }
         }
         return Matrix(size, m)
     }
 
     operator fun times(other: Tuple): Tuple {
-        val x = elems[0][0] * other.x + elems[0][1] * other.y + elems[0][2] * other.z + elems[0][3] * other.w
-        val y = elems[1][0] * other.x + elems[1][1] * other.y + elems[1][2] * other.z + elems[1][3] * other.w
-        val z = elems[2][0] * other.x + elems[2][1] * other.y + elems[2][2] * other.z + elems[2][3] * other.w
-        val w = elems[3][0] * other.x + elems[3][1] * other.y + elems[3][2] * other.z + elems[3][3] * other.w
+        val x =
+            elements[0][0] * other.x + elements[0][1] * other.y + elements[0][2] * other.z + elements[0][3] * other.w
+        val y =
+            elements[1][0] * other.x + elements[1][1] * other.y + elements[1][2] * other.z + elements[1][3] * other.w
+        val z =
+            elements[2][0] * other.x + elements[2][1] * other.y + elements[2][2] * other.z + elements[2][3] * other.w
+        val w =
+            elements[3][0] * other.x + elements[3][1] * other.y + elements[3][2] * other.z + elements[3][3] * other.w
         return Tuple(x, y, z, w)
     }
 
@@ -69,7 +73,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
         for (row in 0 until size) {
             for (col in 0 until size) {
-                m[col][row] = elems[row][col]
+                m[col][row] = elements[row][col]
             }
         }
         return Matrix(size, m)
@@ -85,7 +89,7 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
             if (x == row) continue
             for (y in 0 until size) {
                 if (y == col) continue
-                m[ix][iy++] = elems[x][y]
+                m[ix][iy++] = elements[x][y]
             }
             iy = 0
             ix++
@@ -96,10 +100,10 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
     fun determinant(): Double {
         var determinant = 0.0
         if (size == 2) {
-            determinant = elems[0][0] * elems[1][1] - elems[0][1] * elems[1][0]
+            determinant = elements[0][0] * elements[1][1] - elements[0][1] * elements[1][0]
         } else {
             for (col in 0 until size) {
-                determinant += elems[0][col] * cofactor(0, col)
+                determinant += elements[0][col] * cofactor(0, col)
             }
         }
         return determinant
@@ -107,10 +111,10 @@ class Matrix(val size: Int, val elems: Array<DoubleArray>) {
 
     fun minor(row: Int, col: Int): Double = submatrix(row, col).determinant()
     fun cofactor(row: Int, col: Int): Double = if ((row + col) % 2 == 0) minor(row, col) else -minor(row, col)
-    fun isInvertable(): Boolean = !determinant().eq(0.0)
+    fun isInvertible(): Boolean = !determinant().eq(0.0)
 
     fun inverse(): Matrix {
-        check(isInvertable())
+        check(isInvertible())
 
         val m = Array(size) { DoubleArray(size) { 0.0 } }
 

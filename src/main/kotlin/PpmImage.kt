@@ -8,7 +8,7 @@ const val MAX_LINE_LENGTH: Int = 70
 
 class PpmImage(private val canvas: Canvas) {
 
-    private fun toScaledInt(value: Double): Int = (value * MAX_COLOUR).roundToInt()
+    private fun toOutputColour(value: Double): Int = (value * MAX_COLOUR).roundToInt()
 
     fun write(writer: Writer) {
         writeHeader(writer)
@@ -19,9 +19,9 @@ class PpmImage(private val canvas: Canvas) {
             for (x in 0 until canvas.width) {
                 val pixel = canvas[x, y].clip()
 
-                val rStr = toScaledInt(pixel.r).toString()
-                val gStr = toScaledInt(pixel.g).toString()
-                val bStr = toScaledInt(pixel.b).toString()
+                val rStr = toOutputColour(pixel.r).toString()
+                val gStr = toOutputColour(pixel.g).toString()
+                val bStr = toOutputColour(pixel.b).toString()
 
                 val components = arrayOf(rStr, gStr, bStr)
 

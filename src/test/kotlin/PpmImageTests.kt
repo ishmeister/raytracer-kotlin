@@ -11,7 +11,7 @@ class PpmImageTests {
     fun `Constructing the PPM header`() {
         val canvas = Canvas(10, 20)
         val ppm = PpmImage(canvas)
-        var writer = StringWriter()
+        val writer = StringWriter()
 
         ppm.write(writer)
 
@@ -34,7 +34,7 @@ class PpmImageTests {
         canvas[4, 2] = c3
 
         val ppm = PpmImage(canvas)
-        var writer = StringWriter()
+        val writer = StringWriter()
 
         ppm.write(writer)
 
@@ -55,7 +55,7 @@ class PpmImageTests {
         }
 
         val ppm = PpmImage(canvas)
-        var writer = StringWriter()
+        val writer = StringWriter()
 
         ppm.write(writer)
 
@@ -75,7 +75,7 @@ class PpmImageTests {
     fun `PPM file is terminated by newline character`() {
         val canvas = Canvas(5, 3)
         val ppm = PpmImage(canvas)
-        var writer = StringWriter()
+        val writer = StringWriter()
 
         ppm.write(writer)
 

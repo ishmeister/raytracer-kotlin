@@ -99,7 +99,7 @@ class MatrixTests {
                 doubleArrayOf(4.0, 3.0, 2.0, 1.0)
             )
         )
-        
+
         assertNotEquals(a, b)
         assertFalse(a == b)
         assertFalse(a === b)
@@ -337,7 +337,7 @@ class MatrixTests {
         )
 
         assertEquals(-2120.0, m.determinant())
-        assertTrue(m.isInvertable())
+        assertTrue(m.isInvertible())
     }
 
     @Test
@@ -352,7 +352,7 @@ class MatrixTests {
         )
 
         assertEquals(0.0, m.determinant())
-        assertFalse(m.isInvertable())
+        assertFalse(m.isInvertible())
     }
 
     @Test
@@ -366,7 +366,7 @@ class MatrixTests {
             )
         )
 
-        assertTrue(a.isInvertable())
+        assertTrue(a.isInvertible())
 
         val b = a.inverse()
 
@@ -399,7 +399,7 @@ class MatrixTests {
             )
         )
 
-        assertTrue(a.isInvertable())
+        assertTrue(a.isInvertible())
 
         val b = a.inverse()
 
@@ -426,7 +426,7 @@ class MatrixTests {
             )
         )
 
-        assertTrue(a.isInvertable())
+        assertTrue(a.isInvertible())
 
         val b = a.inverse()
 

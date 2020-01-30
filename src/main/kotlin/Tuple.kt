@@ -16,13 +16,6 @@ data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
     fun cross(other: Tuple): Tuple =
         Tuple(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x)
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as Tuple
-        return x.eq(other.x) && y.eq(other.y) && z.eq(other.z) && w.eq(other.w)
-    }
-
     fun isPoint() = w == 1.0
     fun isVector() = w == 0.0
 
@@ -33,4 +26,11 @@ data class Tuple(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0, 
     operator fun div(scalar: Double) = Tuple(x / scalar, y / scalar, z / scalar, w / scalar)
 
     fun reflect(normal: Tuple): Tuple = this - normal * 2.0 * dot(normal)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as Tuple
+        return x.eq(other.x) && y.eq(other.y) && z.eq(other.z) && w.eq(other.w)
+    }
 }

@@ -49,7 +49,7 @@ fun main() {
     val timeElapsed = measureTimeMillis {
         val canvas = camera.render(world)
         val ppm = PpmImage(canvas)
-        var writer = File("image.ppm").bufferedWriter()
+        val writer = File("image.ppm").bufferedWriter()
         ppm.write(writer)
     }
 

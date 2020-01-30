@@ -8,10 +8,10 @@ private val CENTER = ORIGIN
 
 class Sphere(id: String) : Shape(id) {
 
-    override fun intersectLocal(ray: Ray): List<Intersection> {
-        val sphereToRay = ray.origin - CENTER
-        val a = ray.direction.dot(ray.direction)
-        val b = 2.0 * ray.direction.dot(sphereToRay)
+    override fun intersectLocal(localRay: Ray): List<Intersection> {
+        val sphereToRay = localRay.origin - CENTER
+        val a = localRay.direction.dot(localRay.direction)
+        val b = 2.0 * localRay.direction.dot(sphereToRay)
         val c = sphereToRay.dot(sphereToRay) - RADIUS * RADIUS
         val discriminant = b * b - 4.0 * a * c
 

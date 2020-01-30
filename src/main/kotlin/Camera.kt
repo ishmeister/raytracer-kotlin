@@ -4,9 +4,10 @@ import kotlin.math.tan
 
 class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
 
+    val pixelSize: Double
+
     private val halfWidth: Double
     private val halfHeight: Double
-    val pixelSize: Double
 
     var transform: Matrix = identity()
         set(value) {

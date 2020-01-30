@@ -7,17 +7,6 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
         t > other.t -> 1
         else -> 0
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as Intersection
-
-        if (!t.eq(other.t)) return false
-        if (shape != other.shape) return false
-
-        return true
-    }
 }
 
 data class Computations(
@@ -39,17 +28,21 @@ fun prepareComputations(intersection: Intersection, ray: Ray): Computations {
     val overPoint = point + normalVec * EPSILON
     val inside = normalVec.dot(eyeVec) < 0
 
+    val computedNormalVec = if (inside) -normalVec else normalVec
+
     return Computations(
         t = intersection.t,
         shape = intersection.shape,
         point = point,
         overPoint = overPoint,
         eyeVec = eyeVec,
-        normalVec = if (inside) -normalVec else normalVec,
+        normalVec = computedNormalVec,
         inside = inside
     )
 }
 
 fun hit(intersections: List<Intersection>): Intersection? =
-    if (intersections.isEmpty()) null
-    else intersections.sorted().firstOrNull { i -> i.t.eq(0.0) || i.t > 0.0 }
+    when {
+        intersections.isEmpty() -> null
+        else -> intersections.sorted().firstOrNull { it.t.eq(0.0) || it.t > 0.0 }
+    }

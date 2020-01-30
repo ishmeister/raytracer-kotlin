@@ -1,6 +1,6 @@
 package com.bhana
 
-data class Ray(val origin: Tuple, val direction: Tuple) {
+class Ray(val origin: Tuple, val direction: Tuple) {
 
     init {
         require(origin.isPoint()) { "invalid ray: origin must be a point $origin" }

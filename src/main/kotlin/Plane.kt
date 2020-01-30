@@ -9,11 +9,10 @@ class Plane(id: String) : Shape(id) {
 
     override fun normalAtLocal(localPoint: Tuple): Tuple = NORMAL
 
-    override fun intersectLocal(ray: Ray): List<Intersection> =
-        if (abs(ray.direction.y) < EPSILON) emptyList()
+    override fun intersectLocal(localRay: Ray): List<Intersection> =
+        if (abs(localRay.direction.y) < EPSILON) emptyList()
         else {
-            val t = -ray.origin.y / ray.direction.y
+            val t = -localRay.origin.y / localRay.direction.y
             arrayListOf(Intersection(t, this))
         }
-
 }
