@@ -27,7 +27,7 @@ data class PointLight(val position: Tuple, val intensity: Colour) {
         // negative means light is on the other side of the surface
         val lightDotNormal = lightVec.dot(normalVec)
 
-        if (lightDotNormal < 0) {
+        if (lightDotNormal < 0.0) {
             diffuse = BLACK
             specular = BLACK
         } else {
@@ -38,7 +38,7 @@ data class PointLight(val position: Tuple, val intensity: Colour) {
             val reflectVec = (-lightVec).reflect(normalVec)
             val reflectDotEye = reflectVec.dot(eyeVec)
 
-            specular = if (reflectDotEye <= 0) {
+            specular = if (reflectDotEye <= 0.0) {
                 BLACK
             } else {
                 val factor = reflectDotEye.pow(material.shininess)

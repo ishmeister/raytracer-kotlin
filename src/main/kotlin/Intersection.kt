@@ -12,11 +12,12 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
         val eyeVec = -ray.direction
         val normalVec = shape.normalAt(point)
 
-        // push point slightly in direction of normal to prevent self-shadowing
-        val overPoint = point + normalVec * EPSILON
-        val inside = normalVec.dot(eyeVec) < 0
-
+        val inside = normalVec.dot(eyeVec) < 0.0
         val computedNormalVec = if (inside) -normalVec else normalVec
+
+        // push point slightly in direction of normal to prevent self-shadowing
+        val overPoint = point + computedNormalVec * EPSILON
+        val reflectVec = ray.direction.reflect(computedNormalVec)
 
         return HitComputations(
             t = t,
@@ -25,7 +26,8 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
             overPoint = overPoint,
             eyeVec = eyeVec,
             normalVec = computedNormalVec,
-            inside = inside
+            inside = inside,
+            reflectVec = reflectVec
         )
     }
 }
@@ -37,11 +39,12 @@ data class HitComputations(
     val overPoint: Tuple,
     val eyeVec: Tuple,
     val normalVec: Tuple,
-    val inside: Boolean
+    val inside: Boolean,
+    val reflectVec: Tuple
 )
 
 fun findHit(intersections: List<Intersection>): Intersection? =
     when {
         intersections.isEmpty() -> null
-        else -> intersections.sorted().firstOrNull { it.t.eq(0.0) || it.t > 0.0 }
+        else -> intersections.sorted().firstOrNull { it.t >= 0.0 }
     }

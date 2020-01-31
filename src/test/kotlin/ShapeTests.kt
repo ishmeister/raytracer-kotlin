@@ -26,10 +26,9 @@ class ShapeTests {
     }
 
     @Test
-    fun `Assiging a material`() {
+    fun `Assigning a material`() {
         val s = TestShape()
-        val m = Material()
-        m.ambient = 1.0
+        val m = Material(ambient = 1.0)
         s.material = m
         assertEquals(m, s.material)
     }

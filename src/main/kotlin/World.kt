@@ -1,5 +1,7 @@
 package com.bhana
 
+const val MAX_RECURSIVE_DEPTH = 5
+
 fun defaultWorld(): World {
     val world = World()
     world.lights.add(PointLight(point(-10.0, 10.0, -10.0), WHITE))
@@ -19,29 +21,30 @@ class World {
     val shapes = mutableListOf<Shape>()
     val lights = mutableListOf<PointLight>()
 
-    fun intersect(worldRay: Ray): List<Intersection> = shapes.map { it.intersect(worldRay) }
-        .flatten().filter { it.t >= 0 }.sorted()
+    fun intersect(worldRay: Ray): List<Intersection> =
+        shapes.flatMap { it.intersect(worldRay) }.filter { it.t >= 0.0 }.sorted()
 
-    fun shadeHit(comps: HitComputations) =
+    fun shadeHit(comps: HitComputations, remaining: Int = MAX_RECURSIVE_DEPTH): Colour =
         lights.map {
-            it.lighting(
+            val surfaceColour = it.lighting(
                 comps.shape.material,
                 comps.shape,
-                comps.point,
+                comps.overPoint,
                 comps.eyeVec,
                 comps.normalVec,
                 isShadowed(comps.overPoint, it)
             )
+            surfaceColour + reflectedColour(comps, remaining)
         }.reduce { sum, colour -> sum + colour }
 
-    fun colourAt(ray: Ray): Colour {
+    fun colourAt(ray: Ray, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
         val intersections = intersect(ray)
 
         return if (intersections.isEmpty()) BLACK
         else {
             val hit = intersections[0]
             val comps = hit.prepareComputations(ray)
-            shadeHit(comps)
+            shadeHit(comps, remaining)
         }
     }
 
@@ -55,5 +58,14 @@ class World {
         val hit = findHit(intersections)
 
         return hit != null && hit.t < distance
+    }
+
+    fun reflectedColour(comps: HitComputations, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
+        return if (remaining <= 0 || comps.shape.material.reflectivity == 0.0) BLACK
+        else {
+            val reflectedRay = Ray(comps.overPoint, comps.reflectVec)
+            val colour = colourAt(reflectedRay, remaining - 1)
+            colour * comps.shape.material.reflectivity
+        }
     }
 }

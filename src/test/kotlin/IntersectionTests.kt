@@ -2,6 +2,7 @@ package com.bhana
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import kotlin.math.sqrt
 
 class IntersectionTests {
 
@@ -180,5 +181,15 @@ class IntersectionTests {
 
         assertTrue(comps.overPoint.z < -EPSILON / 2.0)
         assertTrue(comps.point.z > comps.overPoint.z)
+    }
+
+    @Test
+    fun `Pre-computing the reflection vector`() {
+        val shape = Plane("p1")
+        val r = Ray(point(0.0, 1.0, -1.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+        val i = Intersection(sqrt(2.0), shape)
+        val comps = i.prepareComputations(r)
+
+        assertEquals(vector(0.0, sqrt(2.0) / 2.0, sqrt(2.0) / 2.0), comps.reflectVec)
     }
 }

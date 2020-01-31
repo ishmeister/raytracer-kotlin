@@ -34,9 +34,7 @@ class MaterialTests {
 
     @Test
     fun `Lighting with a pattern applied`() {
-        val material = Material(ambient = 1.0, diffuse = 0.0, specular = 0.0)
-
-        material.pattern = StripePattern(WHITE, BLACK)
+        val material = Material(ambient = 1.0, diffuse = 0.0, specular = 0.0, pattern = StripePattern(WHITE, BLACK))
 
         val eyeV = vector(0.0, 0.0, -1.0)
         val normalV = vector(0.0, 0.0, -1.0)
@@ -48,5 +46,11 @@ class MaterialTests {
 
         assertEquals(WHITE, c1)
         assertEquals(BLACK, c2)
+    }
+
+    @Test
+    fun `Reflectivity for the default material`() {
+        val material = Material()
+        assertEquals(0.0, material.reflectivity)
     }
 }

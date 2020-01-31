@@ -2,6 +2,7 @@ package com.bhana
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import kotlin.math.sqrt
 
 class WorldTests {
 
@@ -67,7 +68,7 @@ class WorldTests {
         val comps = i.prepareComputations(r)
         val c = w.shadeHit(comps)
 
-        assertEquals(Colour(0.1, 0.1, 0.1), c)
+        assertEquals(Colour(0.90498, 0.90498, 0.90498), c)
     }
 
     @Test
@@ -157,5 +158,88 @@ class WorldTests {
         val c = w.shadeHit(comps)
 
         assertEquals(Colour(0.1, 0.1, 0.1), c)
+    }
+
+    @Test
+    fun `The reflective colour for a non-reflective material`() {
+        val w = defaultWorld()
+        val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 0.0, 1.0))
+        val shape = w.shapes[1]
+        shape.material = shape.material.copy(ambient = 1.0)
+        val i = Intersection(1.0, shape)
+
+        val comps = i.prepareComputations(r)
+        val colour = w.reflectedColour(comps)
+
+        assertEquals(BLACK, colour)
+    }
+
+    @Test
+    fun `The reflected colour for a reflective material`() {
+        val w = defaultWorld()
+        val shape = Plane("p1")
+        shape.material = Material(reflectivity = 0.5)
+        shape.transform = translation(0.0, -1.0, 0.0)
+        w.shapes.add(shape)
+
+        val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+        val i = Intersection(sqrt(2.0), shape)
+        val comps = i.prepareComputations(r)
+        val colour = w.reflectedColour(comps)
+
+        assertEquals(Colour(0.19033, 0.23791, 0.14274), colour)
+    }
+
+    @Test
+    fun `shade_hit() with a reflective material`() {
+        val w = defaultWorld()
+        val shape = Plane("p1")
+        shape.material = Material(reflectivity = 0.5)
+        shape.transform = translation(0.0, -1.0, 0.0)
+        w.shapes.add(shape)
+
+        val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+        val i = Intersection(sqrt(2.0), shape)
+        val comps = i.prepareComputations(r)
+        val colour = w.shadeHit(comps)
+
+        assertEquals(Colour(0.87675, 0.92434, 0.82917), colour)
+    }
+
+    @Test
+    fun `colour_at() with mutually reflective surfaces`() {
+        val w = World()
+        w.lights.add(PointLight(point(0.0, 0.0, 0.0), WHITE))
+
+        val lower = Plane("lower")
+        lower.material = Material(reflectivity = 1.0)
+        lower.transform = translation(0.0, -1.0, 0.0)
+        w.shapes.add(lower)
+
+        val upper = Plane("upper")
+        upper.material = Material(reflectivity = 1.0)
+        upper.transform = translation(0.0, 1.0, 0.0)
+        w.shapes.add(upper)
+
+        val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 1.0, 0.0))
+        val colour = w.colourAt(r)
+
+        assertNotNull(colour)
+    }
+
+    @Test
+    fun `The reflected colour at the maximum recursive depth`() {
+        val w = defaultWorld()
+        val shape = Plane("p1")
+        shape.material = Material(reflectivity = 0.5)
+        shape.transform = translation(0.0, -1.0, 0.0)
+        w.shapes.add(shape)
+
+        val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+        val i = Intersection(sqrt(2.0), shape)
+        val comps = i.prepareComputations(r)
+        val colour = w.reflectedColour(comps, 0)
+
+        assertEquals(BLACK, colour)
     }
 }

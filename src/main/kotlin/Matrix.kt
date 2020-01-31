@@ -109,8 +109,8 @@ class Matrix(private val size: Int, val elements: Array<DoubleArray>) {
     }
 
     fun minor(row: Int, col: Int): Double = submatrix(row, col).determinant()
-    fun cofactor(row: Int, col: Int): Double = if ((row + col) % 2 == 0) minor(row, col) else -minor(row, col)
-    fun isInvertible(): Boolean = !determinant().eq(0.0)
+    fun cofactor(row: Int, col: Int): Double = if ((row + col) % 2.0 == 0.0) minor(row, col) else -minor(row, col)
+    fun isInvertible(): Boolean = determinant() != 0.0
 
     fun inverse(): Matrix {
         check(isInvertible())

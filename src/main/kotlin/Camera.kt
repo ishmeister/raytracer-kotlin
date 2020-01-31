@@ -58,6 +58,7 @@ class Camera(val hSize: Int, val vSize: Int, val fieldOfView: Double) {
                 val colour = world.colourAt(ray)
                 canvas[x, y] = colour
             }
+            
         }
 
         return canvas

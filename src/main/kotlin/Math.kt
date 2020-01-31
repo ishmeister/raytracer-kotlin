@@ -5,10 +5,10 @@ import kotlin.math.*
 const val EPSILON = 0.00001
 val ORIGIN = point(0.0, 0.0, 0.0)
 
-fun Double.eq(other: Double) = abs(this - other) < EPSILON
+infix fun Double.eq(other: Double) = abs(this - other) < EPSILON
 
 fun clamp(value: Double, min: Double, max: Double) = max(min, min(value, max))
-fun radians(deg: Double) = (deg / 180) * PI
+fun radians(deg: Double) = (deg / 180.0) * PI
 
 fun vector(x: Double, y: Double, z: Double) = Tuple(x, y, z, 0.0)
 fun point(x: Double, y: Double, z: Double) = Tuple(x, y, z, 1.0)
