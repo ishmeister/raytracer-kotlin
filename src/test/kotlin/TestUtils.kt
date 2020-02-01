@@ -34,5 +34,5 @@ fun defaultWorld(): World {
     return world
 }
 
-fun glassSphere(): Sphere =
-    Sphere("GlassSphere").apply { material = Material(transparency = 1.0, refractiveIndex = 1.5) }
+fun glassSphere(id: String = "GlassSphere"): Sphere =
+    Sphere(id).apply { material = Material(transparency = 1.0, refractiveIndex = 1.5) }

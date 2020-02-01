@@ -2,6 +2,8 @@ package com.bhana
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import kotlin.math.sqrt
 
 class IntersectionTests {
@@ -191,5 +193,42 @@ class IntersectionTests {
         val comps = i.prepareComputations(r)
 
         assertEquals(vector(0.0, sqrt(2.0) / 2.0, sqrt(2.0) / 2.0), comps.reflectVec)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "0, 1.0, 1.5",
+        "1, 1.5, 2.0",
+        "2, 2.0, 2.5",
+        "3, 2.5, 2.5",
+        "4, 2.5, 1.5",
+        "5, 1.5, 1.0"
+    )
+    fun `Finding n1 and n2 at various intersections`(index: Int, n1: Double, n2: Double) {
+        val a = glassSphere("a")
+        a.transform = scaling(2.0, 2.0, 2.0)
+        a.material = a.material.copy(refractiveIndex = 1.5)
+
+        val b = glassSphere("b")
+        b.transform = translation(0.0, 0.0, -0.25)
+        b.material = b.material.copy(refractiveIndex = 2.0)
+
+        val c = glassSphere("c")
+        c.transform = translation(0.0, 0.0, 0.25)
+        c.material = c.material.copy(refractiveIndex = 2.5)
+
+        val r = Ray(point(0.0, 0.0, -4.0), vector(0.0, 0.0, 1.0))
+        val xs = listOf(
+            Intersection(2.0, a),
+            Intersection(2.75, b),
+            Intersection(3.25, c),
+            Intersection(4.75, b),
+            Intersection(5.25, c),
+            Intersection(6.0, a)
+        )
+        val comps = xs[index].prepareComputations(r, xs)
+
+        assertEquals(n1, comps.n1, "n1")
+        assertEquals(n2, comps.n2, "n2")
     }
 }
