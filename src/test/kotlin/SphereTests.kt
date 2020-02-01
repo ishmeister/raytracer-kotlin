@@ -25,7 +25,7 @@ class SphereTests {
     fun `Intersecting a sphere with a ray`() {
         val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
         val s = Sphere("s")
-        
+
         val xs = s.intersectLocal(r)
 
         assertEquals(2, xs.size)

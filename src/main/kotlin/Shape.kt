@@ -12,18 +12,6 @@ abstract class Shape(val id: String) {
     var inverseTransform: Matrix = transform.inverse()
         private set
 
-    override fun toString(): String = "Shape(id='$id')"
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as Shape
-        if (id != other.id) return false
-        return true
-    }
-
-    override fun hashCode(): Int = id.hashCode()
-
     fun normalAt(worldPoint: Tuple): Tuple {
         val localPoint = inverseTransform * worldPoint
         val localNormal = normalAtLocal(localPoint)
@@ -39,4 +27,27 @@ abstract class Shape(val id: String) {
     }
 
     internal abstract fun intersectLocal(localRay: Ray): List<Intersection>
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Shape
+
+        if (id != other.id) return false
+        if (material != other.material) return false
+        if (transform != other.transform) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + material.hashCode()
+        result = 31 * result + transform.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "Shape(id='$id', material=$material, transform=$transform)"
+    }
 }

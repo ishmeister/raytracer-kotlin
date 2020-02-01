@@ -16,7 +16,9 @@ fun main() {
     middleSphere.material =
         Material(
             colour = RED,
-            reflectivity = 0.4
+            reflectivity = 0.4,
+            transparency = 0.0,
+            refractiveIndex = 1.0
         )
 
     val rightSphere = Sphere("rightSphere")
@@ -24,8 +26,10 @@ fun main() {
     rightSphere.material =
         Material(
             colour = Colour(0.5, 1.0, 0.1),
-            specular = 0.5,
-            pattern = ringPattern
+            specular = 0.6,
+            pattern = ringPattern,
+            transparency = 0.0,
+            refractiveIndex = 1.0
         )
 
     val leftSphere = Sphere("leftSphere")
@@ -34,7 +38,9 @@ fun main() {
         Material(
             colour = Colour(1.0, 0.8, 0.1),
             specular = 0.5,
-            pattern = spherePattern
+            pattern = spherePattern,
+            transparency = 0.0,
+            refractiveIndex = 1.0
         )
 
     val light1 = PointLight(point(-10.0, 10.0, -10.0), WHITE)
@@ -64,7 +70,14 @@ fun main() {
 
 fun addCheckerBox(world: World) {
     val checkerPattern = CheckerPattern(WHITE, BLACK)
-    val material = Material(reflectivity = 0.0, diffuse = 0.7, specular = 0.1, pattern = checkerPattern)
+    val material = Material(
+        diffuse = 0.7,
+        specular = 0.1,
+        pattern = checkerPattern,
+        reflectivity = 0.0,
+        transparency = 0.0,
+        refractiveIndex = 1.0
+    )
 
     val floor = Plane("floor")
     floor.material = material.copy(reflectivity = 0.1)
