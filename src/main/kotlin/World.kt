@@ -46,11 +46,33 @@ class World {
     }
 
     fun reflectedColour(comps: HitComputations, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
-        return if (remaining <= 0 || comps.shape.material.reflectivity == 0.0) BLACK
+        return if (
+            remaining <= 0 ||
+            comps.shape.material.reflectivity == 0.0
+        ) BLACK
         else {
             val reflectedRay = Ray(comps.overPoint, comps.reflectVec)
             val colour = colourAt(reflectedRay, remaining - 1)
             colour * comps.shape.material.reflectivity
         }
+    }
+
+    fun refractedColour(comps: HitComputations, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
+        return if (
+            remaining <= 0 ||
+            comps.shape.material.reflectivity == 0.0 ||
+            isTotalInternalReflection(comps)
+        ) BLACK
+        else {
+            WHITE
+        }
+    }
+
+    private fun isTotalInternalReflection(comps: HitComputations): Boolean {
+        // Snell's Law
+        val nRatio = comps.n1 / comps.n2
+        val cosI = comps.eyeVec.dot(comps.normalVec)
+        val sin2t = nRatio * nRatio * (1 - cosI * cosI)
+        return sin2t > 1.0
     }
 }

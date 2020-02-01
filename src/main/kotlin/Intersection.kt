@@ -46,6 +46,9 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
 
         // push point slightly in direction of normal to prevent self-shadowing
         val overPoint = point + computedNormalVec * EPSILON
+        // push point slightly below the surface for refractions
+        val underPoint = point - computedNormalVec * EPSILON
+
         val reflectVec = ray.direction.reflect(computedNormalVec)
 
         return HitComputations(
@@ -58,7 +61,8 @@ data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersecti
             inside = inside,
             reflectVec = reflectVec,
             n1 = n1,
-            n2 = n2
+            n2 = n2,
+            underPoint = underPoint
         )
     }
 }
@@ -73,7 +77,8 @@ data class HitComputations(
     val inside: Boolean,
     val reflectVec: Tuple,
     val n1: Double,
-    val n2: Double
+    val n2: Double,
+    val underPoint: Tuple
 )
 
 fun findHit(intersections: List<Intersection>): Intersection? =

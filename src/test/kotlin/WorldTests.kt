@@ -242,4 +242,44 @@ class WorldTests {
 
         assertEquals(BLACK, colour)
     }
+
+    @Test
+    fun `The refracted colour with an opaque surface`() {
+        val w = defaultWorld()
+        val shape = w.shapes[0]
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val xs = listOf(Intersection(4.0, shape), Intersection(6.0, shape))
+        val comps = xs[0].prepareComputations(r, xs)
+        val c = w.refractedColour(comps, 5)
+
+        assertEquals(BLACK, c)
+    }
+
+    @Test
+    fun `The refracted colour at the maximum recursion depth`() {
+        val w = defaultWorld()
+        w.shapes[0].material = Material(transparency = 1.0, refractiveIndex = 1.5)
+
+        val shape = w.shapes[0]
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val xs = listOf(Intersection(4.0, shape), Intersection(6.0, shape))
+        val comps = xs[0].prepareComputations(r, xs)
+        val c = w.refractedColour(comps, 0)
+
+        assertEquals(BLACK, c)
+    }
+
+    @Test
+    fun `The refracted colour under total internal reflection`() {
+        val w = defaultWorld()
+        w.shapes[0].material = Material(transparency = 1.0, refractiveIndex = 1.5)
+
+        val shape = w.shapes[0]
+        val r = Ray(point(0.0, 0.0, sqrt(2.0) / 2.0), vector(0.0, 1.0, 0.0))
+        val xs = listOf(Intersection(-sqrt(2.0) / 2.0, shape), Intersection(sqrt(2.0) / 2.0, shape))
+        val comps = xs[1].prepareComputations(r, xs)
+        val c = w.refractedColour(comps, 5)
+
+        assertEquals(BLACK, c)
+    }
 }

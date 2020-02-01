@@ -231,4 +231,18 @@ class IntersectionTests {
         assertEquals(n1, comps.n1, "n1")
         assertEquals(n2, comps.n2, "n2")
     }
+
+    @Test
+    fun `The under point is offset below the surface`() {
+        val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
+        val shape = glassSphere()
+        shape.transform = translation(0.0, 0.0, 1.0)
+
+        val i = Intersection(5.0, shape)
+        val xs = listOf(i)
+        val comps = i.prepareComputations(r, xs)
+
+        assertTrue(comps.underPoint.z > EPSILON / 2.0)
+        assertTrue(comps.point.z < comps.underPoint.z)
+    }
 }
