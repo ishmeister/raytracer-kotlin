@@ -331,4 +331,27 @@ class WorldTests {
 
         assertEquals(Colour(0.93642, 0.68642, 0.68642), colour)
     }
+
+    @Test
+    fun `shade_hit() with a reflective, transparent material`() {
+        val w = defaultWorld()
+        val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+
+        val floor = Plane("floor")
+        floor.transform = translation(0.0, -1.0, 0.0)
+        floor.material = Material(reflectivity = 0.5, transparency = 0.5, refractiveIndex = 1.5)
+        w.shapes.add(floor)
+
+        val ball = Sphere("ball")
+        ball.transform = translation(0.0, -3.5, -0.5)
+        ball.material = Material(colour = RED, ambient = 0.5)
+        w.shapes.add(ball)
+
+        val xs = listOf(Intersection(sqrt(2.0), floor))
+        val comps = xs[0].prepareComputations(r, xs)
+
+        val colour = w.shadeHit(comps, 5)
+
+        assertEquals(Colour(0.93391, 0.69643, 0.69243), colour)
+    }
 }

@@ -1,6 +1,8 @@
 package com.bhana
 
 import java.util.*
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 data class Intersection(val t: Double, val shape: Shape) : Comparable<Intersection> {
     override fun compareTo(other: Intersection) = when {
@@ -86,3 +88,16 @@ fun findHit(intersections: List<Intersection>): Intersection? =
         intersections.isEmpty() -> null
         else -> intersections.sorted().firstOrNull { it.t >= 0.0 }
     }
+
+fun calculateReflectance(comps: HitComputations): Double {
+    // Schlick approximation of Fresnel effect
+    var cos = comps.eyeVec.dot(comps.normalVec)
+    if (comps.n1 > comps.n2) {
+        val n = comps.n1 / comps.n2
+        val sin2t = n * n * (1.0 - cos * cos)
+        if (sin2t > 1.0) return 1.0
+        cos = sqrt(1.0 - sin2t)
+    }
+    val r0 = ((comps.n1 - comps.n2) / (comps.n1 + comps.n2)).pow(2)
+    return r0 + (1.0 - r0) * (1.0 - cos).pow(5)
+}

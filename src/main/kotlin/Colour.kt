@@ -2,7 +2,7 @@ package com.bhana
 
 val BLACK: Colour = Colour(0.0, 0.0, 0.0)
 val WHITE: Colour = Colour(1.0, 1.0, 1.0)
-val GREY: Colour = Colour(0.8, 0.8, 0.8)
+val GREY: Colour = Colour(0.5, 0.5, 0.5)
 val RED: Colour = Colour(1.0, 0.0, 0.0)
 val BLUE: Colour = Colour(0.0, 0.0, 1.0)
 

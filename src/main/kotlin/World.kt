@@ -21,7 +21,17 @@ class World {
                 comps.normalVec,
                 isShadowed(comps.overPoint, it)
             )
-            surfaceColour + reflectedColour(comps, remaining) + refractedColour(comps, remaining)
+
+            val reflectedColour = reflectedColour(comps, remaining)
+            val refractedColour = refractedColour(comps, remaining)
+            val material = comps.shape.material
+
+            if (material.reflectivity > 0.0 && material.transparency > 0.0) {
+                val reflectance = calculateReflectance(comps)
+                surfaceColour + reflectedColour * reflectance + refractedColour * (1.0 - reflectance)
+            } else {
+                surfaceColour + reflectedColour + refractedColour
+            }
         }.reduce { sum, colour -> sum + colour }
 
     fun colourAt(ray: Ray, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
@@ -79,6 +89,4 @@ class World {
 
         return colourAt(refractedRay, remaining - 1) * comps.shape.material.transparency
     }
-
-
 }
