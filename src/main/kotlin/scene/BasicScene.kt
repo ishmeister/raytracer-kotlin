@@ -17,8 +17,8 @@ fun main() {
         Material(
             colour = RED,
             reflectivity = 0.4,
-            transparency = 0.0,
-            refractiveIndex = 1.0
+            transparency = 0.5,
+            refractiveIndex = RefractiveIndex.GLASS.index
         )
 
     val rightSphere = Sphere("rightSphere")
@@ -27,9 +27,7 @@ fun main() {
         Material(
             colour = Colour(0.5, 1.0, 0.1),
             specular = 0.6,
-            pattern = ringPattern,
-            transparency = 0.0,
-            refractiveIndex = 1.0
+            pattern = ringPattern
         )
 
     val leftSphere = Sphere("leftSphere")
@@ -38,9 +36,7 @@ fun main() {
         Material(
             colour = Colour(1.0, 0.8, 0.1),
             specular = 0.5,
-            pattern = spherePattern,
-            transparency = 0.0,
-            refractiveIndex = 1.0
+            pattern = spherePattern
         )
 
     val light1 = PointLight(point(-10.0, 10.0, -10.0), WHITE)
@@ -74,9 +70,7 @@ fun addCheckerBox(world: World) {
         diffuse = 0.7,
         specular = 0.1,
         pattern = checkerPattern,
-        reflectivity = 0.0,
-        transparency = 0.0,
-        refractiveIndex = 1.0
+        reflectivity = 0.0
     )
 
     val floor = Plane("floor")
@@ -86,26 +80,25 @@ fun addCheckerBox(world: World) {
     val ceiling = Plane("ceiling")
     ceiling.transform = translation(0.0, 15.0, 0.0)
     ceiling.material = material
-    world.shapes.add(ceiling)
+//    world.shapes.add(ceiling)
 
     val wall1 = Plane("wall1")
     wall1.transform = translation(0.0, 0.0, 15.0) * rotationX(radians(90.0))
     wall1.material = material
-    world.shapes.add(wall1)
+//    world.shapes.add(wall1)
 
     val wall2 = Plane("wall2")
     wall2.transform = translation(0.0, 0.0, -15.0) * rotationX(radians(90.0))
     wall2.material = material
-    world.shapes.add(wall2)
+//    world.shapes.add(wall2)
 
     val wall3 = Plane("wall3")
     wall3.transform = translation(15.0, 0.0, 0.0) * rotationZ(radians(90.0))
     wall3.material = material
-    world.shapes.add(wall3)
+//    world.shapes.add(wall3)
 
     val wall4 = Plane("wall4")
     wall4.transform = translation(-15.0, 0.0, 0.0) * rotationZ(radians(90.0))
     wall4.material = material
-    world.shapes.add(wall4)
-
+//    world.shapes.add(wall4)
 }

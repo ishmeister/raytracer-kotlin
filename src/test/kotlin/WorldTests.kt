@@ -185,6 +185,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
         val i = Intersection(sqrt(2.0), shape)
         val comps = i.prepareComputations(r)
+
         val colour = w.reflectedColour(comps)
 
         assertEquals(Colour(0.19033, 0.23791, 0.14274), colour)
@@ -201,6 +202,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
         val i = Intersection(sqrt(2.0), shape)
         val comps = i.prepareComputations(r)
+
         val colour = w.shadeHit(comps)
 
         assertEquals(Colour(0.87675, 0.92434, 0.82917), colour)
@@ -222,6 +224,7 @@ class WorldTests {
         w.shapes.add(upper)
 
         val r = Ray(point(0.0, 0.0, 0.0), vector(0.0, 1.0, 0.0))
+
         val colour = w.colourAt(r)
 
         assertNotNull(colour)
@@ -238,6 +241,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
         val i = Intersection(sqrt(2.0), shape)
         val comps = i.prepareComputations(r)
+
         val colour = w.reflectedColour(comps, 0)
 
         assertEquals(BLACK, colour)
@@ -250,6 +254,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
         val xs = listOf(Intersection(4.0, shape), Intersection(6.0, shape))
         val comps = xs[0].prepareComputations(r, xs)
+
         val c = w.refractedColour(comps, 5)
 
         assertEquals(BLACK, c)
@@ -264,6 +269,7 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, -5.0), vector(0.0, 0.0, 1.0))
         val xs = listOf(Intersection(4.0, shape), Intersection(6.0, shape))
         val comps = xs[0].prepareComputations(r, xs)
+
         val c = w.refractedColour(comps, 0)
 
         assertEquals(BLACK, c)
@@ -278,8 +284,51 @@ class WorldTests {
         val r = Ray(point(0.0, 0.0, sqrt(2.0) / 2.0), vector(0.0, 1.0, 0.0))
         val xs = listOf(Intersection(-sqrt(2.0) / 2.0, shape), Intersection(sqrt(2.0) / 2.0, shape))
         val comps = xs[1].prepareComputations(r, xs)
+
         val c = w.refractedColour(comps, 5)
 
         assertEquals(BLACK, c)
+    }
+
+    @Test
+    fun `The refracted colour with a refracted ray`() {
+        val w = defaultWorld()
+        w.shapes[0].material = Material(ambient = 1.0, pattern = TestPattern())
+        w.shapes[1].material = Material(transparency = 1.0, refractiveIndex = 1.5)
+
+        val a = w.shapes[0]
+        val b = w.shapes[1]
+
+        val r = Ray(point(0.0, 0.0, 0.1), vector(0.0, 1.0, 0.0))
+        val xs =
+            listOf(Intersection(-0.9899, a), Intersection(-0.4899, b), Intersection(0.4899, b), Intersection(0.9899, a))
+        val comps = xs[2].prepareComputations(r, xs)
+
+        val c = w.refractedColour(comps, 5)
+
+        assertEquals(Colour(0.0, 0.99887, 0.04721), c)
+    }
+
+    @Test
+    fun `shade_hit() with a transparent material`() {
+        val w = defaultWorld()
+
+        val floor = Plane("floor")
+        floor.transform = translation(0.0, -1.0, 0.0)
+        floor.material = Material(transparency = 0.5, refractiveIndex = 1.5)
+        w.shapes.add(floor)
+
+        val ball = Sphere("ball")
+        ball.transform = translation(0.0, -3.5, -0.5)
+        ball.material = Material(colour = Colour(1.0, 0.0, 0.0), ambient = 0.5)
+        w.shapes.add(ball)
+
+        val r = Ray(point(0.0, 0.0, -3.0), vector(0.0, -sqrt(2.0) / 2.0, sqrt(2.0) / 2.0))
+        val xs = listOf(Intersection(sqrt(2.0), floor))
+        val comps = xs[0].prepareComputations(r, xs)
+
+        val colour = w.shadeHit(comps, 5)
+
+        assertEquals(Colour(0.93642, 0.68642, 0.68642), colour)
     }
 }

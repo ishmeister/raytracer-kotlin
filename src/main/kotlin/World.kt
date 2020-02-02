@@ -1,5 +1,7 @@
 package com.bhana
 
+import kotlin.math.sqrt
+
 const val MAX_RECURSIVE_DEPTH = 5
 
 class World {
@@ -19,7 +21,7 @@ class World {
                 comps.normalVec,
                 isShadowed(comps.overPoint, it)
             )
-            surfaceColour + reflectedColour(comps, remaining)
+            surfaceColour + reflectedColour(comps, remaining) + refractedColour(comps, remaining)
         }.reduce { sum, colour -> sum + colour }
 
     fun colourAt(ray: Ray, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
@@ -58,21 +60,25 @@ class World {
     }
 
     fun refractedColour(comps: HitComputations, remaining: Int = MAX_RECURSIVE_DEPTH): Colour {
-        return if (
+        if (
             remaining <= 0 ||
-            comps.shape.material.reflectivity == 0.0 ||
-            isTotalInternalReflection(comps)
-        ) BLACK
-        else {
-            WHITE
-        }
-    }
+            comps.shape.material.transparency == 0.0
+        ) return BLACK
 
-    private fun isTotalInternalReflection(comps: HitComputations): Boolean {
         // Snell's Law
         val nRatio = comps.n1 / comps.n2
         val cosI = comps.eyeVec.dot(comps.normalVec)
         val sin2t = nRatio * nRatio * (1 - cosI * cosI)
-        return sin2t > 1.0
+
+        // Total internal reflection, so return black
+        if (sin2t > 1.0) return BLACK
+
+        val cosT = sqrt(1.0 - sin2t)
+        val direction = comps.normalVec * (nRatio * cosI - cosT) - comps.eyeVec * nRatio
+        val refractedRay = Ray(comps.underPoint, direction)
+
+        return colourAt(refractedRay, remaining - 1) * comps.shape.material.transparency
     }
+
+
 }
