@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 class Matrix(private val size: Int, val elements: Array<DoubleArray>) {
     init {

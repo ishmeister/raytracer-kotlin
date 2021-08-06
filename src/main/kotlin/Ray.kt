@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 data class Ray(val origin: Tuple, val direction: Tuple) {
     init {

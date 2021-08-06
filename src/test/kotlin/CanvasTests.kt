@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -51,7 +51,7 @@ class CanvasTests {
         val exception = assertThrows(IllegalStateException::class.java) {
             c[10, 20]
         }
-        
+
         assertNotNull(exception)
     }
 }

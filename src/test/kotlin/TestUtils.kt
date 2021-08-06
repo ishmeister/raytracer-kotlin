@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 class TestPattern : Pattern() {
     override fun patternAt(point: Tuple): Colour = Colour(point.x, point.y, point.z)

@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 val BLACK: Colour = Colour(0.0, 0.0, 0.0)
 val WHITE: Colour = Colour(1.0, 1.0, 1.0)

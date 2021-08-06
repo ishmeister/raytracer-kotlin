@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 enum class RefractiveIndex(val index: Double) {
     VACUUM(1.0),

@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

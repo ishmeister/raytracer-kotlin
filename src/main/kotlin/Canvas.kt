@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 class Canvas(val width: Int, val height: Int) {
     val pixels = Array(width) { Array(height) { Colour() } }

@@ -1,4 +1,4 @@
-package com.bhana
+package com.kotrt
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -53,7 +53,7 @@ class ColourTests {
     fun `Clipping a colour`() {
         val c1 = Colour(1.5, -0.2, 0.4)
         val c2 = c1.clip()
-        
+
         assertEquals(Colour(1.0, 0.0, 0.4), c2)
     }
 }
