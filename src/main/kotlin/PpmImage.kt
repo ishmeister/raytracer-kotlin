@@ -28,7 +28,7 @@ class PpmImage(private val canvas: Canvas) {
                     lineLength = 0
                 }
 
-                if(lineLength > 0){
+                if (lineLength > 0) {
                     writer.write(" ")
                     lineLength++
                 }
