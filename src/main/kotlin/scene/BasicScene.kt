@@ -56,6 +56,7 @@ fun main() {
         val ppm = PpmImage(canvas)
         val writer = File("image.ppm").bufferedWriter()
         ppm.write(writer)
+        writer.close()
     }
 
     println("Render time: ${timeElapsed}ms")
