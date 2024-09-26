@@ -1,6 +1,8 @@
 # Kotlin Raytracer
 
-A basic raytracer in Kotlin.
+A basic raytracer in Kotlin. Kotlin may not be the best choice of language to write a raytracer but it was fun to try and this should be considered a learning exercise.
+
+![example](example.png)
 
 ## Getting Started
 
